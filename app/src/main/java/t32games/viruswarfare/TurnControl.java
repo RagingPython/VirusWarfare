@@ -41,10 +41,11 @@ public class TurnControl implements View.OnClickListener{
                 }
             }
             if (!flag) {
-                if ((gL.getAvailability(x, y)) & (semiturnPointer < 3)) {
+                if ((gL.getAvailability(x, y, semiturnPointer,semiturnX,semiturnY)) & (semiturnPointer < 3)) {
                     semiturnX[semiturnPointer] = x;
                     semiturnY[semiturnPointer] = y;
                     semiturnPointer = semiturnPointer + 1;
+
                     refreshView();
                 }
             }
@@ -73,7 +74,7 @@ public class TurnControl implements View.OnClickListener{
                 break;
             case GameLogic.PLAYER_1:
             case GameLogic.PLAYER_2:
-                FieldStateSnapshot fSS = gL.getFieldData();
+                FieldStateSnapshot fSS = gL.getFieldData(semiturnPointer,semiturnX,semiturnY);
                 for (int i=0; i<semiturnPointer; i++){
                     fSS.setCellSelected(semiturnX[i],semiturnY[i]);
                 }
