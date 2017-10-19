@@ -31,6 +31,8 @@ public class MainActivity extends Activity{
         buttonNewGame.setOnClickListener(turnControl);
         buttonEndTurn.setOnClickListener(turnControl);
         gameField.setOnTouchListener(gameField);
+        gameField.invalidate();
+        gameStatus.invalidate();
     }
 
 }

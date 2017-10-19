@@ -241,9 +241,11 @@ public class GameLogic {
                         for (int dx = -1; dx < 2; dx++) {
                             for (int dy = -1; dy < 2; dy++) {
                                 if ((x + dx >= 0) & (x + dx < X_FIELD_SIZE) & (y + dy >= 0) & (y + dy < Y_FIELD_SIZE)) {
-                                    if (!((players[x + dx][y + dy] == p)&(killed[x + dx][y + dy]))) {
-                                        map[x + dx][y + dy]=p;
-                                        flag=true;
+                                    if (map[x+dx][y+dy] != p) {
+                                        if (!((players[x + dx][y + dy] == p) & (killed[x + dx][y + dy]))) {
+                                            map[x + dx][y + dy] = p;
+                                            flag = true;
+                                        }
                                     }
                                 }
                             }
