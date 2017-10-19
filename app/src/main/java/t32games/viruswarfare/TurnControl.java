@@ -1,6 +1,7 @@
 package t32games.viruswarfare;
 
 import android.view.View;
+import android.widget.TextView;
 
 
 public class TurnControl implements View.OnClickListener{
@@ -9,6 +10,7 @@ public class TurnControl implements View.OnClickListener{
     int semiturnPointer=0;
     GameLogic gL;
     GameField gF;
+    GameStatus gS;
 
     public TurnControl(){}
 
@@ -20,13 +22,21 @@ public class TurnControl implements View.OnClickListener{
         gF=gameField;
     }
 
+    public void setGameStatus(GameStatus t){
+        gS=t;
+    }
+
     public void newTurn() {
         semiturnPointer=0;
         refreshView();
     }
 
     public void endTurn() {
-        if (gL.makeTurn(semiturnPointer, semiturnX, semiturnY)) {newTurn();}
+        if ((gL.getPlayerTurn()==GameLogic.PLAYER_1)|(gL.getPlayerTurn()==GameLogic.PLAYER_2)) {
+            if (gL.makeTurn(semiturnPointer, semiturnX, semiturnY)) {
+                newTurn();
+            }
+        }
     }
 
     public void cellPressed(int x, int y) {
@@ -68,6 +78,7 @@ public class TurnControl implements View.OnClickListener{
     }
 
     private void refreshView() {
+
         switch (gL.getPlayerTurn()) {
             case GameLogic.IDLE:
                 gF.setFieldData(null);
@@ -83,9 +94,12 @@ public class TurnControl implements View.OnClickListener{
             case GameLogic.WINNER_PLAYER_1:
             case GameLogic.WINNER_PLAYER_2:
                 gF.setFieldData(gL.getFieldData());
-                //TODO other win visual
+                break;
+            case GameLogic.WINNER_DRAW:
                 break;
         }
+        gS.setGameStatus(gL.getPlayerTurn());
+        gS.invalidate();
         gF.invalidate();
     }
 }

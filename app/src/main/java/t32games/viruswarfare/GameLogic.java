@@ -8,6 +8,7 @@ public class GameLogic {
     public static final int PLAYER_2 =2;
     public static final int WINNER_PLAYER_1 =3;
     public static final int WINNER_PLAYER_2 =4;
+    public static final int WINNER_DRAW =5;
     public static final int X_FIELD_SIZE = 10;
     public static final int Y_FIELD_SIZE = 10;
 
@@ -184,6 +185,75 @@ public class GameLogic {
     }
 
     private void checkGameEnd(){
+        boolean flag1 = false, flag2= false;
+        for (int i=0;i<X_FIELD_SIZE;i++) {
+            for (int j = 0; j < Y_FIELD_SIZE; j++) {
+                if ((players[i][j]==PLAYER_1)&(!killed[i][j])) {
+                    flag1=true;
+                }
+                if ((players[i][j]==PLAYER_2)&(!killed[i][j])) {
+                    flag2=true;
+                }
+            }
+        }
 
+        if ((!flag1)&(!flag2)) {
+            playerTurn=0;
+        } else if ((flag1)&(!flag2)) {
+            playerTurn=WINNER_PLAYER_1;
+        } else if ((!flag1)&(flag2)) {
+            playerTurn = WINNER_PLAYER_2;
+        } else {
+            if ((checkPlayerCantWin(PLAYER_1))&(checkPlayerCantWin(PLAYER_2))) {
+                playerTurn=WINNER_DRAW;
+            }
+        }
+    }
+
+    private boolean checkPlayerCantWin(int p) {
+        int opposite=0;
+        boolean flag=true;
+        int[][] map = new int[X_FIELD_SIZE][Y_FIELD_SIZE];
+
+        if(p==PLAYER_1) {opposite=PLAYER_2;}
+        else if(p==PLAYER_2){opposite=PLAYER_1;}
+
+        for (int x = 0; x < X_FIELD_SIZE; x++) {
+            for (int y = 0; y < Y_FIELD_SIZE; y++) {
+                if (!killed[x][y]) {
+                    map[x][y] = players[x][y];
+                } else {
+                    map[x][y] = 0;
+                }
+            }
+        }
+
+        while (flag) {
+            flag=false;
+            for (int x = 0; x < X_FIELD_SIZE; x++) {
+                for (int y = 0; y < Y_FIELD_SIZE; y++) {
+                    if (map[x][y] == p) {
+                        for (int dx = -1; dx < 2; dx++) {
+                            for (int dy = -1; dy < 2; dy++) {
+                                if ((x + dx >= 0) & (x + dx < X_FIELD_SIZE) & (y + dy >= 0) & (y + dy < Y_FIELD_SIZE)) {
+                                    if (!((players[x + dx][y + dy] == p)&(killed[x + dx][y + dy]))) {
+                                        map[x + dx][y + dy]=p;
+                                        flag=true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int x = 0; x < X_FIELD_SIZE; x++) {
+            for (int y = 0; y < Y_FIELD_SIZE; y++) {
+                if (map[x][y]==opposite) {return true;}
+            }
+        }
+
+        return false;
     }
 }
