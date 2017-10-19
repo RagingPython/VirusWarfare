@@ -10,7 +10,7 @@ import android.util.AttributeSet;
  */
 
 public class GameStatus extends AppCompatTextView {
-    int gameStatus;
+    int gameStatus=0;
 
     public GameStatus(Context context, AttributeSet attrs) {
         super(context, attrs);

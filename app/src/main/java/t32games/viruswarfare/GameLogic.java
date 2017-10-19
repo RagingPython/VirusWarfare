@@ -197,6 +197,11 @@ public class GameLogic {
             }
         }
 
+        if((players[0][0]==0)|(players[X_FIELD_SIZE-1][Y_FIELD_SIZE-1]==0)){
+            flag1=true;
+            flag2=true;
+        }
+
         if ((!flag1)&(!flag2)) {
             playerTurn=0;
         } else if ((flag1)&(!flag2)) {
