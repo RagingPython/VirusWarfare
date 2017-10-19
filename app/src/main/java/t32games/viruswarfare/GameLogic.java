@@ -118,7 +118,7 @@ public class GameLogic {
 
         for (int s=-1; s<semiturnPointer;s++) {
             if (s!=-1) {
-                if((map[semiturnX[s]][semiturnY[s]] == 0)&(p[0][0]!=0)&(p[X_FIELD_SIZE][Y_FIELD_SIZE]!=0)) {
+                if((map[semiturnX[s]][semiturnY[s]] == 0)&(p[0][0]!=0)&(p[X_FIELD_SIZE-1][Y_FIELD_SIZE-1]!=0)) {
                     return null;
                 } else {
                     if (p[semiturnX[s]][semiturnY[s]] == 0) {
