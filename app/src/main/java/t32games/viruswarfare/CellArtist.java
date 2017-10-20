@@ -39,6 +39,7 @@ public class CellArtist {
         availablePaint.setARGB(170,170,255,150);
         player2ControlPaint.setARGB(255,255,170,170);
         player1ControlPaint.setARGB(255,200,200,255);
+        context=ctx;
     }
 
     public void initialize(float cellSize) {
