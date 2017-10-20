@@ -34,7 +34,7 @@ public class GameField extends View implements View.OnTouchListener{
 
     public GameField(Context context, AttributeSet attrs) {
         super(context, attrs);
-        cellArtist = new CellArtist();
+        cellArtist = new CellArtist(context);
         this.setBackgroundColor(BACKGROUND_COLOR);
     }
 

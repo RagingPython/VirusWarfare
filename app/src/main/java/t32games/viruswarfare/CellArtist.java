@@ -1,6 +1,7 @@
 package t32games.viruswarfare;
 
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,8 +24,9 @@ public class CellArtist {
     Paint player1ControlPaint = new Paint();
     Paint player2ControlPaint = new Paint();
     Bitmap background;
+    Context context;
 
-    public CellArtist(){
+    public CellArtist(Context ctx){
         player1DeadPaint.setStyle(Paint.Style.STROKE);
         player1DeadPaint.setStrokeWidth(3);
         player2DeadPaint.setStyle(Paint.Style.STROKE);
@@ -48,7 +50,7 @@ public class CellArtist {
         playerDeadPath.lineTo(5*cS/6,5*cS/6);
         playerDeadPath.moveTo(5*cS/6, cS/6);
         playerDeadPath.lineTo(cS/6, 5*cS/6);
-        background = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.cell1),(int)cS,(int)cS,true);
+        background = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell1),(int)cS,(int)cS,true);
     }
 
     public void drawCell(Canvas canvas, float x, float y, int player, boolean killed, int selected) {
