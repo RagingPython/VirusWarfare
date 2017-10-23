@@ -3,8 +3,6 @@ package t32games.viruswarfare;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,8 +18,6 @@ public class GameField extends View implements View.OnTouchListener{
     private TurnControl tC;
     private FieldStateSnapshot fieldState = null;
 
-    private Path gridPath;
-    private Paint gridPaint;
     private int lastHeight = -1;
     private int lastWidth = -1;
     private int clickX = 0;
@@ -48,11 +44,8 @@ public class GameField extends View implements View.OnTouchListener{
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Path p = new Path();
-        Paint s = new Paint();
-
         if ((lastHeight!=canvas.getHeight())|(lastWidth!=canvas.getWidth())) {
-            recalculateGrid(canvas.getWidth(), canvas.getHeight());
+            recalculateCellSize(canvas.getWidth(), canvas.getHeight());
             lastHeight=canvas.getHeight();
             lastWidth=canvas.getWidth();
             cellArtist.initialize(cS);
@@ -64,40 +57,17 @@ public class GameField extends View implements View.OnTouchListener{
 
             for (int x = 0; x < GameLogic.X_FIELD_SIZE; x++) {
                 for (int y = 0; y < GameLogic.Y_FIELD_SIZE; y++) {
-                    //TODO: change selected
                     cellArtist.drawCell(canvas, leftSpacing + x * cS, topSpacing + y * cS, fieldState.getPlayerTurn(), fieldState.getPlayer(x,y), fieldState.getKilled(x, y), fieldState.getAvailability(x,y));
                 }
             }
         }
-
-
-        canvas.drawPath(gridPath, gridPaint);
     }
 
-    private void recalculateGrid(int x, int y) {
-        gridPath = new Path();
-        gridPaint = new Paint();
-
+    private void recalculateCellSize(int x, int y) {
         cS = (float) Math.floor(Math.min(x,y)*GAME_FIELD_RATIO/((double) Math.max(GameLogic.X_FIELD_SIZE,GameLogic.Y_FIELD_SIZE)));
         leftSpacing= ((x-GameLogic.X_FIELD_SIZE*cS)/2f);
         topSpacing= ((y-GameLogic.Y_FIELD_SIZE*cS)/2f);
 
-        gridPath.reset();
-        gridPath.moveTo(0,0);
-
-        for(int i = 0; i<=GameLogic.X_FIELD_SIZE;i++) {
-            gridPath.moveTo(cS*i,-GRID_LINE_WIDTH*cS/2f);
-            gridPath.lineTo(cS*i,GameLogic.Y_FIELD_SIZE*cS +cS*GRID_LINE_WIDTH/2f);
-        }
-        for(int i = 0; i<=GameLogic.Y_FIELD_SIZE;i++) {
-            gridPath.moveTo(-GRID_LINE_WIDTH*cS/2f, cS *i);
-            gridPath.lineTo(GameLogic.X_FIELD_SIZE*cS +GRID_LINE_WIDTH*cS/2f, cS*i);
-        }
-
-        gridPaint.setColor(GRID_LINE_COLOR);
-        gridPaint.setStyle(Paint.Style.STROKE);
-        gridPaint.setStrokeWidth(GRID_LINE_WIDTH*cS);
-        gridPath.offset(leftSpacing,topSpacing);
     }
 
     @Override
