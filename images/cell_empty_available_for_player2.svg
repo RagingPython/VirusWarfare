@@ -7,7 +7,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="136.53334"
@@ -16,21 +15,12 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="cell_empty.svg">
+   sodipodi:docname="cell_empty_available_for_player2.svg"
+   inkscape:export-filename="C:\Users\nuzhdin\AndroidStudioProjects\VirusWarfare\images\cell_empty_available_for_player2.png"
+   inkscape:export-xdpi="89.999992"
+   inkscape:export-ydpi="89.999992">
   <defs
      id="defs4">
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient4542">
-      <stop
-         style="stop-color:#000000;stop-opacity:1;"
-         offset="0"
-         id="stop4538" />
-      <stop
-         style="stop-color:#000000;stop-opacity:0;"
-         offset="1"
-         id="stop4540" />
-    </linearGradient>
     <marker
        inkscape:isstock="true"
        style="overflow:visible"
@@ -61,17 +51,6 @@
          transform="matrix(0.8,0,0,0.8,10,0)"
          inkscape:connector-curvature="0" />
     </marker>
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4542"
-       id="radialGradient4544"
-       cx="58.893913"
-       cy="64.810959"
-       fx="58.893913"
-       fy="64.810959"
-       r="4.4906306"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.2504667,0.22943118,-0.05709223,2.39137,-71.253277,-79.55756)" />
     <pattern
        y="0"
        x="0"
@@ -87,9 +66,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.85620343"
-     inkscape:cx="152.44316"
-     inkscape:cy="199.09591"
+     inkscape:zoom="2.421709"
+     inkscape:cx="164.98172"
+     inkscape:cy="61.930985"
      inkscape:document-units="px"
      inkscape:current-layer="layer5"
      showgrid="false"
@@ -100,7 +79,7 @@
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:snap-nodes="true"
-     inkscape:snap-object-midpoints="false" />
+     inkscape:snap-object-midpoints="true" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -151,8 +130,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="core"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <circle
        style="opacity:1;fill:#ffc37e;fill-opacity:1;stroke:none;stroke-width:0.69092822;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4603"
@@ -160,14 +138,6 @@
        cy="-64.35379"
        r="22.695957"
        transform="scale(1,-1)" />
-    <ellipse
-       style="opacity:1;fill:url(#radialGradient4544);fill-opacity:1;stroke:none;stroke-width:1.51933265;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path4608"
-       cx="-1.6190892"
-       cy="89.312706"
-       rx="8.4586449"
-       ry="12.66861"
-       transform="rotate(-39.912114)" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -301,5 +271,20 @@
        d="m -30.906677,199.99541 h 59.69956 v 39.44971 h -59.69956 z"
        style="fill:#00adf1;fill-opacity:1;fill-rule:nonzero;stroke:#140e0d;stroke-width:1.87498605px;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0" />
+    <g
+       id="g4550"
+       style="fill:none;stroke:#00adf1;stroke-width:7.49999952;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(0.78517661,0,0,0.78517661,-100.94337,25.859066)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4531"
+         d="M 209.82082,25.799452 V 72.254246"
+         style="fill:none;fill-rule:evenodd;stroke:#00adf1;stroke-width:7.49999952;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4531-4"
+         d="m 186.59342,49.026849 h 46.45479"
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#00adf1;stroke-width:7.49999952;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
   </g>
 </svg>

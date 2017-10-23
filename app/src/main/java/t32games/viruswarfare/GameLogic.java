@@ -89,6 +89,7 @@ public class GameLogic {
         FieldStateSnapshot ans = new FieldStateSnapshot();
         ans.setPlayers(players,killed);
         ans.setAvailability(getAvailabilityMap(semiturnPointer,semiturnX,semiturnY));
+        ans.setPlayerTurn(playerTurn);
         return ans;
     }
 

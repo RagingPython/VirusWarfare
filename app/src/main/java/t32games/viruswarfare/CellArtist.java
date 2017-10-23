@@ -12,94 +12,77 @@ import android.graphics.Path;
 
 public class CellArtist {
     float cS;
-    Path playerAlivePath = new Path();
-    Path playerDeadPath = new Path();
 
-    Paint player1AlivePaint = new Paint();
-    Paint player2AlivePaint = new Paint();
-    Paint player1DeadPaint = new Paint();
-    Paint player2DeadPaint = new Paint();
-    Paint selectedPaint = new Paint();
-    Paint availablePaint = new Paint();
-    Paint player1ControlPaint = new Paint();
-    Paint player2ControlPaint = new Paint();
-    Bitmap background;
+    Bitmap empty, player1, player2, player1Selected, player2Selected, player1Available, player2Available, player1Dead, player2Dead, emptyAvailableForPlayer1, emptyAvailableForPlayer2, emptySelectedForPlayer1, emptySelectedForPlayer2;
+
+
     Context context;
 
     public CellArtist(Context ctx){
-        player1DeadPaint.setStyle(Paint.Style.STROKE);
-        player1DeadPaint.setStrokeWidth(3);
-        player2DeadPaint.setStyle(Paint.Style.STROKE);
-        player2DeadPaint.setStrokeWidth(3);
-        player1AlivePaint.setColor(Color.BLUE);
-        player1DeadPaint.setColor(Color.BLUE);
-        player2AlivePaint.setColor(Color.RED);
-        player2DeadPaint.setColor(Color.RED);
-        selectedPaint.setColor(Color.YELLOW);
-        availablePaint.setARGB(170,170,255,150);
-        player2ControlPaint.setARGB(255,255,170,170);
-        player1ControlPaint.setARGB(255,200,200,255);
         context=ctx;
     }
 
     public void initialize(float cellSize) {
         cS=cellSize;
-        playerAlivePath.reset();
-        playerAlivePath.addCircle(cS/2, cS/2, cS/3, Path.Direction.CW);
-        playerDeadPath.reset();
-        playerDeadPath.moveTo(cS/6, cS/6);
-        playerDeadPath.lineTo(5*cS/6,5*cS/6);
-        playerDeadPath.moveTo(5*cS/6, cS/6);
-        playerDeadPath.lineTo(cS/6, 5*cS/6);
-        background = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell1),(int)cS,(int)cS,true);
+        empty = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty),(int)cS,(int)cS,true);
+        player1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1),(int)cS,(int)cS,true);
+        player2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2),(int)cS,(int)cS,true);
+        player1Selected = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1_selected),(int)cS,(int)cS,true);
+        player2Selected = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2_selected),(int)cS,(int)cS,true);
+        player1Available = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1_available),(int)cS,(int)cS,true);
+        player2Available = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2_available),(int)cS,(int)cS,true);
+        player1Dead = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1_dead),(int)cS,(int)cS,true);
+        player2Dead = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2_dead),(int)cS,(int)cS,true);
+        emptyAvailableForPlayer1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_available_for_player1),(int)cS,(int)cS,true);
+        emptyAvailableForPlayer2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_available_for_player2),(int)cS,(int)cS,true);
+        emptySelectedForPlayer1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_selected_for_player1),(int)cS,(int)cS,true);
+        emptySelectedForPlayer2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_selected_for_player2),(int)cS,(int)cS,true);
+
     }
 
-    public void drawCell(Canvas canvas, float x, float y, int player, boolean killed, int selected) {
-        Paint p = new Paint();
-        Path pth;
-        p.setColor(Color.WHITE);
-        if (selected == FieldStateSnapshot.CELL_SELECTED) {
-            p=selectedPaint;
-        } else if (selected == FieldStateSnapshot.CELL_AVAILABLE) {
-            p=availablePaint;
-        } else if (((player==GameLogic.PLAYER_1)&(!killed))|((player==GameLogic.PLAYER_2)&(killed))) {
-            p=player1ControlPaint;
-        } else if (((player==GameLogic.PLAYER_2)&(!killed))|((player==GameLogic.PLAYER_1)&(killed))) {
-            p=player2ControlPaint;
+    public void drawCell(Canvas canvas, float x, float y, int playerTurn, int player, boolean killed, int selected) {
+        Bitmap toDraw=null;
+        if (player==0){
+            if (selected==FieldStateSnapshot.CELL_NOT_AVAILABLE) {
+                toDraw=empty;
+            } else if (selected==FieldStateSnapshot.CELL_AVAILABLE) {
+                if (playerTurn==GameLogic.PLAYER_1) {
+                    toDraw=emptyAvailableForPlayer1;
+                } else if (playerTurn==GameLogic.PLAYER_2) {
+                    toDraw=emptyAvailableForPlayer2;
+                }
+            } else if (selected==FieldStateSnapshot.CELL_SELECTED) {
+                if (playerTurn==GameLogic.PLAYER_1) {
+                    toDraw=emptySelectedForPlayer1;
+                } else if (playerTurn==GameLogic.PLAYER_2) {
+                    toDraw=emptySelectedForPlayer2;
+                }
+            }
+        } else if(player==GameLogic.PLAYER_1) {
+            if (killed) {
+                toDraw=player1Dead;
+            } else {
+                if (selected==FieldStateSnapshot.CELL_NOT_AVAILABLE) {
+                    toDraw=player1;
+                } else if (selected==FieldStateSnapshot.CELL_AVAILABLE){
+                    toDraw=player1Available;
+                } else if (selected==FieldStateSnapshot.CELL_SELECTED){
+                    toDraw=player1Selected;
+                }
+            }
+        } else if(player==GameLogic.PLAYER_2) {
+            if (killed) {
+                toDraw=player2Dead;
+            } else {
+                if (selected==FieldStateSnapshot.CELL_NOT_AVAILABLE) {
+                    toDraw=player2;
+                } else if (selected==FieldStateSnapshot.CELL_AVAILABLE){
+                    toDraw=player2Available;
+                } else if (selected==FieldStateSnapshot.CELL_SELECTED){
+                    toDraw=player2Selected;
+                }
+            }
         }
-        if (p!=null) {
-            canvas.drawRect(x,y,x+cS,y+cS,p);
-        }
-
-        if (!killed) {
-            pth=playerAlivePath;
-        } else {
-            pth=playerDeadPath;
-        }
-
-        p=null;
-        if ((player==0)) {
-            canvas.drawBitmap(background,x,y,null);
-        } else if ((player==GameLogic.PLAYER_1)&(!killed)) {
-            pth=playerAlivePath;
-            p=player1AlivePaint;
-        } else if ((player==GameLogic.PLAYER_1)&(killed)) {
-            pth=playerDeadPath;
-            p=player1DeadPaint;
-        } else if ((player==GameLogic.PLAYER_2)&(!killed)) {
-            pth=playerAlivePath;
-            p=player2AlivePaint;
-        } else if ((player==GameLogic.PLAYER_2)&(killed)) {
-            pth=playerDeadPath;
-            p=player2DeadPaint;
-        }
-
-        if (p!=null) {
-            Path pth2 = new Path();
-            pth2.reset();
-            pth2.addPath(pth);
-            pth2.offset(x,y);
-            canvas.drawPath(pth2,p);
-        }
+        canvas.drawBitmap(toDraw,x,y,null);
     }
 }

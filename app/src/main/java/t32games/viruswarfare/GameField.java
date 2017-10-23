@@ -65,7 +65,7 @@ public class GameField extends View implements View.OnTouchListener{
             for (int x = 0; x < GameLogic.X_FIELD_SIZE; x++) {
                 for (int y = 0; y < GameLogic.Y_FIELD_SIZE; y++) {
                     //TODO: change selected
-                    cellArtist.drawCell(canvas, leftSpacing + x * cS, topSpacing + y * cS, fieldState.getPlayer(x,y), fieldState.getKilled(x, y), fieldState.getAvailability(x,y));
+                    cellArtist.drawCell(canvas, leftSpacing + x * cS, topSpacing + y * cS, fieldState.getPlayerTurn(), fieldState.getPlayer(x,y), fieldState.getKilled(x, y), fieldState.getAvailability(x,y));
                 }
             }
         }
@@ -125,4 +125,5 @@ public class GameField extends View implements View.OnTouchListener{
         }
         return false;
     }
+
 }

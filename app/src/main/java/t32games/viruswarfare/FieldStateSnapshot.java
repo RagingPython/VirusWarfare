@@ -6,7 +6,7 @@ public class FieldStateSnapshot {
     public static final int CELL_AVAILABLE=1;
     public static final int CELL_SELECTED=2;
 
-
+    private int playerTurn;
     private int[][] players;
     private boolean[][] killed;
     private int[][] availability;
@@ -38,5 +38,13 @@ public class FieldStateSnapshot {
 
     public int getAvailability(int x,int y) {
         return availability[x][y];
+    }
+
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    public int getPlayerTurn() {
+        return playerTurn;
     }
 }
