@@ -1,9 +1,9 @@
 Tracking started at v0.3.0
 
 v0.3.0(D)
-    -added simple cells PNGs
-v0.4.0
+    +added simple cells PNGs
     +intercept "back" button
+v0.4.0
     -refine MVP pattern with interfaces
     -add DB and saving/loading field state
     -add fragments support
