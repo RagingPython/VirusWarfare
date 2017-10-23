@@ -1,0 +1,15 @@
+Tracking started at v0.3.0
+
+v0.3.0(D)
+    -added simple cells PNGs
+v0.4.0
+    +intercept "back" button
+    -refine MVP pattern with interfaces
+    -add DB and saving/loading field state
+    -add fragments support
+    -add menu fragment
+    -add options fragment
+    -add skin support
+    -remake buttons
+    -add button style
+    -add comments
