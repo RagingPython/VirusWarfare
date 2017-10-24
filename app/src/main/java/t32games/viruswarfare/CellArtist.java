@@ -42,6 +42,7 @@ public class CellArtist {
 
     public void drawCell(Canvas canvas, float x, float y, int playerTurn, int player, boolean killed, int selected) {
         Bitmap toDraw=null;
+
         if (player==0){
             if (selected==FieldStateSnapshot.CELL_NOT_AVAILABLE) {
                 toDraw=empty;
