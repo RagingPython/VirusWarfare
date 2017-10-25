@@ -33,6 +33,7 @@ public class GameField extends View implements View.OnTouchListener, EventReceiv
         super(context, attrs);
         cellArtist = new CellArtist(context);
         this.setBackgroundColor(BACKGROUND_COLOR);
+        this.setOnTouchListener(this);
     }
 
     public void initialize(EventBroadcaster eventBroadcaster) {
