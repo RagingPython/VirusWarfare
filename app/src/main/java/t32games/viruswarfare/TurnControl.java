@@ -1,7 +1,5 @@
 package t32games.viruswarfare;
 
-import android.util.Log;
-
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 import EDEMVP.HoldingEventBroadcaster;
@@ -57,7 +55,7 @@ public class TurnControl implements EventReceiver{
 
         switch (playerTurn) {
             case GameLogic.IDLE:
-                eventManager.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, null);
+                viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, null);
                 break;
             case GameLogic.PLAYER_1:
             case GameLogic.PLAYER_2:
@@ -66,19 +64,18 @@ public class TurnControl implements EventReceiver{
                 for (int i=0; i<turnData.semiturnPointer; i++){
                     fSR.fSS.setCellSelected(turnData.semiturnX[i],turnData.semiturnY[i]);
                 }
-                eventManager.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
+                viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
                 break;
             case GameLogic.WINNER_PLAYER_1:
             case GameLogic.WINNER_PLAYER_2:
                 fSR = new FieldStateRequest(null);
                 eventManager.broadcastEvent(EventTag.REQUEST_FIELD_DATA, fSR);
-                eventManager.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
+                viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
                 break;
             case GameLogic.WINNER_DRAW:
                 break;
         }
-        eventManager.broadcastEvent(EventTag.VIEW_UPDATE_PLAYER_TURN, playerTurn);
-        Log.d("PT", String.valueOf(playerTurn));
+        viewState.broadcastEvent(EventTag.VIEW_UPDATE_PLAYER_TURN, playerTurn);
     }
 
     @Override
