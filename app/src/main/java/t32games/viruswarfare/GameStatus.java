@@ -22,7 +22,6 @@ public class GameStatus extends AppCompatTextView implements EventReceiver{
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d("draw", String.valueOf(gameStatus));
         switch (gameStatus) {
             case GameLogic.IDLE:
                 setText("Press START GAME");
@@ -50,6 +49,7 @@ public class GameStatus extends AppCompatTextView implements EventReceiver{
     public void eventMapping(int eventTag, Object o) {
         if (eventTag==EventTag.VIEW_UPDATE_PLAYER_TURN){
             gameStatus=(int) o;
+            Log.d("draw", String.valueOf(gameStatus));
             invalidate();
         }
     }
