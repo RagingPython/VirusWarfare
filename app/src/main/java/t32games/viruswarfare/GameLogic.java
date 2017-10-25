@@ -1,8 +1,9 @@
 package t32games.viruswarfare;
 
-import android.util.Log;
+import EDEMVP.EventBroadcaster;
+import EDEMVP.EventReceiver;
 
-public class GameLogic {
+public class GameLogic implements EventReceiver {
     public static final int IDLE =0;
     public static final int PLAYER_1 =1;
     public static final int PLAYER_2 =2;
@@ -15,6 +16,7 @@ public class GameLogic {
     private int[][] players = new int[10][10];
     private boolean[][] killed = new boolean[10][10];
     private int playerTurn;
+    private EventBroadcaster eventManager;
 
     public GameLogic(){
         reset();
@@ -37,20 +39,25 @@ public class GameLogic {
     public void startNewGame(){
         reset();
         playerTurn=PLAYER_1;
+        eventManager.broadcastEvent(EventTag.PLAYER_TURN_CHANGED, playerTurn);
     }
 
-    public boolean makeTurn(int semiturnPointer, int[] semiturnX, int[] semiturnY) {
+    public void makeTurn(TurnData tD) {
         boolean flag =true;
-        if (semiturnPointer<3) {
+        if (tD.semiturnPointer<3) {
             flag=false;
         }
-        for(int i=0;i<semiturnPointer;i++) {
-            if (!getAvailability(semiturnX[i],semiturnY[i],i, semiturnX, semiturnY)){
+        /*
+        for(int i=0;i<tD.semiturnPointer;i++) {
+            AvailabilityRequest aR = new AvailabilityRequest();
+            aR.turnData =tD;
+            aR.x=null;
+            if (!getAvailability(aR)){
                 flag = false;
             }
-        }
+        } */
         if (!flag){
-            int[][] map = getAvailabilityMap(semiturnPointer,semiturnX,semiturnY);
+            int[][] map = getAvailabilityMap(tD);
             int availabilitySum = 0;
             for (int x=0;x<X_FIELD_SIZE;x++) {
                 for (int y = 0; y < Y_FIELD_SIZE; y++) {
@@ -62,12 +69,12 @@ public class GameLogic {
             }
         }
         if (flag){
-            for(int i=0;i<semiturnPointer;i++) {
-                if (players[semiturnX[i]][semiturnY[i]]==0) {
-                    players[semiturnX[i]][semiturnY[i]]=playerTurn;
-                    killed[semiturnX[i]][semiturnY[i]]=false;
+            for(int i=0;i<tD.semiturnPointer;i++) {
+                if (players[tD.semiturnX[i]][tD.semiturnY[i]]==0) {
+                    players[tD.semiturnX[i]][tD.semiturnY[i]]=playerTurn;
+                    killed[tD.semiturnX[i]][tD.semiturnY[i]]=false;
                 } else {
-                    killed[semiturnX[i]][semiturnY[i]]=true;
+                    killed[tD.semiturnX[i]][tD.semiturnY[i]]=true;
                 }
             }
             if (playerTurn==PLAYER_1) {
@@ -76,37 +83,35 @@ public class GameLogic {
                 playerTurn=PLAYER_1;
             }
             checkGameEnd();
+            eventManager.broadcastEvent(EventTag.PLAYER_TURN_CHANGED, playerTurn);
         }
-        return flag;
     }
 
-    public FieldStateSnapshot getFieldData() {
-        return getFieldData(0, null, null);
-    }
-
-    public FieldStateSnapshot getFieldData(int semiturnPointer,int[] semiturnX, int[] semiturnY) {
+    public void requestFieldData(FieldStateRequest fSR) {
         int[][] av = new int[X_FIELD_SIZE][Y_FIELD_SIZE];
-        FieldStateSnapshot ans = new FieldStateSnapshot();
-        ans.setPlayers(players,killed);
-        ans.setAvailability(getAvailabilityMap(semiturnPointer,semiturnX,semiturnY));
-        ans.setPlayerTurn(playerTurn);
-        return ans;
+        fSR.fSS = new FieldStateSnapshot();
+        fSR.fSS.setPlayers(players,killed);
+        fSR.fSS.setAvailability(getAvailabilityMap(fSR.turnData));
+        fSR.fSS.setPlayerTurn(playerTurn);
+
     }
 
-    public boolean getAvailability(int x, int y, int semiturnPointer, int[] semiturnX, int[] semiturnY){
-        return getAvailabilityMap(semiturnPointer,semiturnX,semiturnY)[x][y]==1;
-    }
 
-    public boolean getAvailability(int x, int y){
-        return getAvailabilityMap()[x][y]==1;
+    public boolean getAvailability(AvailabilityRequest aR){
+        aR.available = (getAvailabilityMap()[aR.x][aR.y]==1);
+        return aR.available;
     }
 
     public int[][] getAvailabilityMap() {
-        int[][] map=getAvailabilityMap(0, null, null);
-        return null;
+        int[][] map=getAvailabilityMap(null);
+        return map;
     }
 
-    public int[][] getAvailabilityMap(int semiturnPointer, int[] semiturnX, int[] semiturnY) {
+    public int[][] getAvailabilityMap(TurnData tD) {
+        if (tD==null) {
+            tD=new TurnData();
+            tD.semiturnPointer=0;
+        }
         int[][] map = new int[X_FIELD_SIZE][Y_FIELD_SIZE];
         int[][] p = new int[X_FIELD_SIZE][Y_FIELD_SIZE];
         boolean[][] k = new boolean[X_FIELD_SIZE][Y_FIELD_SIZE];
@@ -118,16 +123,16 @@ public class GameLogic {
             }
         }
 
-        for (int s=-1; s<semiturnPointer;s++) {
+        for (int s=-1; s<tD.semiturnPointer;s++) {
             if (s!=-1) {
-                if((map[semiturnX[s]][semiturnY[s]] == 0)&(p[0][0]!=0)&(p[X_FIELD_SIZE-1][Y_FIELD_SIZE-1]!=0)) {
+                if((map[tD.semiturnX[s]][tD.semiturnY[s]] == 0)&(p[0][0]!=0)&(p[X_FIELD_SIZE-1][Y_FIELD_SIZE-1]!=0)) {
                     return null;
                 } else {
-                    if (p[semiturnX[s]][semiturnY[s]] == 0) {
-                        p[semiturnX[s]][semiturnY[s]] = playerTurn;
-                        k[semiturnX[s]][semiturnY[s]]=false;
+                    if (p[tD.semiturnX[s]][tD.semiturnY[s]] == 0) {
+                        p[tD.semiturnX[s]][tD.semiturnY[s]] = playerTurn;
+                        k[tD.semiturnX[s]][tD.semiturnY[s]]=false;
                     } else {
-                        k[semiturnX[s]][semiturnY[s]]=true;
+                        k[tD.semiturnX[s]][tD.semiturnY[s]]=true;
                     }
                 }
             }
@@ -263,5 +268,26 @@ public class GameLogic {
         }
 
         return false;
+    }
+
+    @Override
+    public void eventMapping(int eventTag, Object o) {
+        switch (eventTag) {
+            case EventTag.INIT_STAGE_EVENT_MANAGER:
+                eventManager = (EventBroadcaster) o;
+                break;
+            case EventTag.BUTTON_NEW_CLICK:
+                startNewGame();
+                break;
+            case EventTag.TRY_END_TURN:
+                makeTurn((TurnData) o);
+                break;
+            case EventTag.REQUEST_FIELD_DATA:
+                requestFieldData((FieldStateRequest) o);
+                break;
+            case EventTag.REQUEST_AVAILABILITY:
+                getAvailability((AvailabilityRequest) o);
+                break;
+        }
     }
 }

@@ -5,20 +5,19 @@ import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-/**
- * Created by nuzhdin on 19.10.2017.
- */
+import EDEMVP.EventReceiver;
 
-public class GameStatus extends AppCompatTextView {
+
+public class GameStatus extends AppCompatTextView implements EventReceiver{
     int gameStatus=0;
 
     public GameStatus(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void setGameStatus(int gs) {
-        gameStatus=gs;
-    }
+    //public void setGameStatus(int gs) {
+      //  gameStatus=gs;
+   // }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -43,5 +42,13 @@ public class GameStatus extends AppCompatTextView {
                 break;
         }
         super.onDraw(canvas);
+    }
+
+    @Override
+    public void eventMapping(int eventTag, Object o) {
+        if (eventTag==EventTag.VIEW_UPDATE_PLAYER_TURN){
+            gameStatus=(int) o;
+            invalidate();
+        }
     }
 }

@@ -5,6 +5,6 @@ package EDEMVP;
  */
 
 public interface EventReceiver {
-    public void onReceiveEvent(int eventTag, Object o);
+    public void eventMapping(int eventTag, Object o);
 
 }
