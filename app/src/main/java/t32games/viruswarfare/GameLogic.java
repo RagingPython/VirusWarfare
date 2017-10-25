@@ -98,7 +98,7 @@ public class GameLogic implements EventReceiver {
 
 
     public boolean getAvailability(AvailabilityRequest aR){
-        aR.available = (getAvailabilityMap()[aR.x][aR.y]==1);
+        aR.available = (getAvailabilityMap(aR.turnData)[aR.x][aR.y]==1);
         return aR.available;
     }
 
