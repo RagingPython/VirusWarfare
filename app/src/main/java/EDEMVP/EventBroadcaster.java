@@ -1,5 +1,7 @@
 package EDEMVP;
 
+import android.util.Log;
+
 import java.util.HashSet;
 
 public class EventBroadcaster {
@@ -14,6 +16,7 @@ public class EventBroadcaster {
     }
 
     public void broadcastEvent(int eventTag, Object o) {
+        Log.d("Event",String.valueOf(eventTag));
         for (EventReceiver e:receivers) {
             e.eventMapping(eventTag, o);
         }
