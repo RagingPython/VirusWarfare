@@ -1,5 +1,7 @@
 package t32games.viruswarfare;
 
+import android.util.Log;
+
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 import EDEMVP.HoldingEventBroadcaster;
@@ -76,6 +78,7 @@ public class TurnControl implements EventReceiver{
                 break;
         }
         eventManager.broadcastEvent(EventTag.VIEW_UPDATE_PLAYER_TURN, playerTurn);
+        Log.d("PT", String.valueOf(playerTurn));
     }
 
     @Override
