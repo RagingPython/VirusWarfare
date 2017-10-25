@@ -11,6 +11,11 @@ public class TurnControl implements EventReceiver{
     EventBroadcaster eventManager;
     HoldingEventBroadcaster viewState;
 
+    public TurnControl() {
+        turnData.semiturnPointer=0;
+        turnData.semiturnX=new int[3];
+        turnData.semiturnY=new int[3];
+    }
 
     public void newTurn(int playerTurn) {
         turnData.semiturnPointer=0;
