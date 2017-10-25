@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import EDEMVP.EventReceiver;
 
@@ -21,6 +22,7 @@ public class GameStatus extends AppCompatTextView implements EventReceiver{
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d("draw", String.valueOf(gameStatus));
         switch (gameStatus) {
             case GameLogic.IDLE:
                 setText("Press START GAME");
