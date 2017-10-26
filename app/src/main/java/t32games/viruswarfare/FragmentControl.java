@@ -4,6 +4,7 @@ package t32games.viruswarfare;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import EDEMVP.EventBroadcaster;
@@ -13,13 +14,13 @@ import EDEMVP.HoldingEventBroadcaster;
 class FragmentControl implements EventReceiver {
     private FragmentManager fragmentManager;
     private EventBroadcaster eventManager;
-    private RelativeLayout fragmentContainer;
+    private FrameLayout fragmentContainer;
     private HoldingEventBroadcaster viewState;
     private MenuFragment menuFragment;
     private GameFragment gameFragment;
     private Fragment currentFragment = null;
 
-    FragmentControl(FragmentManager fragmentManager, RelativeLayout fragmentContainer) {
+    FragmentControl(FragmentManager fragmentManager, FrameLayout fragmentContainer) {
         this.fragmentManager=fragmentManager;
         this.fragmentContainer=fragmentContainer;
         menuFragment=new MenuFragment();
@@ -27,12 +28,17 @@ class FragmentControl implements EventReceiver {
     }
 
     private void goToFragment(Fragment fragment) {
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
         if (currentFragment!=null) {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
+            transaction.remove(currentFragment);
         }
-        FragmentTransaction transaction=fragmentManager.beginTransaction();
+
         transaction.replace(fragmentContainer.getId(),fragment);
         transaction.commit();
+        fragmentManager.executePendingTransactions();
+        currentFragment=fragment;
+        fragmentManager.popBackStack();
         viewState.registerReceiver((EventReceiver) fragment);
     }
 
@@ -50,6 +56,11 @@ class FragmentControl implements EventReceiver {
                 break;
             case EventTag.MENU_BUTTON_PLAY_CLICK:
                 goToFragment(gameFragment);
+                break;
+            case EventTag.GAME_BUTTON_MENU_CLICK:
+                //goToFragment(menuFragment);
+                FragmentTransaction transaction=fragmentManager.beginTransaction();
+                transaction.remove(gameFragment).commit();
                 break;
         }
     }

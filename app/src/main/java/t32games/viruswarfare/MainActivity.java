@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 import EDEMVP.HoldingEventBroadcaster;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity implements EventReceiver{
 
     HoldingEventBroadcaster viewState;
     EventBroadcaster eventManager;
@@ -30,9 +31,12 @@ public class MainActivity extends Activity{
 
         GameLogic gL = new GameLogic();
         TurnControl tC = new TurnControl();
-        RelativeLayout fragmentContainer = findViewById(R.id._relativeLayoutFragmentContainer);
+        FrameLayout fragmentContainer = findViewById(R.id._relativeLayoutFragmentContainer);
         FragmentControl fC = new FragmentControl(getFragmentManager(),fragmentContainer);
 
+
+
+        eventManager.registerReceiver(this);
         eventManager.registerReceiver(gL);
         eventManager.registerReceiver(tC);
         eventManager.registerReceiver(fC);
@@ -48,5 +52,14 @@ public class MainActivity extends Activity{
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    public void eventMapping(int eventTag, Object o) {
+        switch (eventTag) {
+            case EventTag.MENU_BUTTON_EXIT_CLICK:
+                finish();
+                break;
+        }
     }
 }
