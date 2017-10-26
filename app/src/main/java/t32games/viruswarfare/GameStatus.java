@@ -12,7 +12,7 @@ import EDEMVP.EventReceiver;
 class GameStatus extends AppCompatTextView implements EventReceiver{
     int gameStatus=0;
 
-    GameStatus(Context context, AttributeSet attrs) {
+    public GameStatus(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

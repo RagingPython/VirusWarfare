@@ -15,6 +15,7 @@ import EDEMVP.EventReceiver;
 public class GameFragment extends Fragment implements View.OnClickListener, EventReceiver{
     Button buttonNewGame, buttonEndTurn;
     GameStatus gameStatus;
+    GameField gameField;
     EventBroadcaster eventManager;
 
 
@@ -27,6 +28,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Even
         buttonNewGame = (Button) view.findViewById(R.id._buttonNewGame);
         buttonEndTurn = (Button) view.findViewById(R.id._buttonEndTurn);
         gameStatus = (GameStatus) view.findViewById(R.id._textViewGameStatus);
+        gameField = (GameField) view.findViewById(R.id._gameField);
 
         buttonNewGame.setOnClickListener(this);
         buttonEndTurn.setOnClickListener(this);
@@ -50,5 +52,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Even
                 eventManager = (EventBroadcaster) o;
                 break;
         }
+        gameField.eventMapping(eventTag,o);
+        gameStatus.eventMapping(eventTag,o);
     }
 }

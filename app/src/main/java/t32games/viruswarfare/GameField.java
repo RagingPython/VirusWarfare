@@ -29,15 +29,11 @@ class GameField extends View implements View.OnTouchListener, EventReceiver{
 
 
 
-    GameField(Context context, AttributeSet attrs) {
+    public GameField(Context context, AttributeSet attrs) {
         super(context, attrs);
         cellArtist = new CellArtist(context);
         this.setBackgroundColor(BACKGROUND_COLOR);
         this.setOnTouchListener(this);
-    }
-
-    private void initialize(EventBroadcaster eventBroadcaster) {
-        eventManager=eventBroadcaster;
     }
 
     @Override
@@ -96,9 +92,10 @@ class GameField extends View implements View.OnTouchListener, EventReceiver{
 
     @Override
     public void eventMapping(int eventTag, Object o) {
+
         switch (eventTag) {
             case EventTag.INIT_STAGE_EVENT_MANAGER:
-                initialize((EventBroadcaster) o);
+                eventManager=(EventBroadcaster) o;
                 break;
             case EventTag.VIEW_UPDATE_FIELD:
                 fieldState = (FieldStateSnapshot) o;
