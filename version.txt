@@ -4,10 +4,11 @@ v0.3.0(D)
     +added simple cells PNGs
     +intercept "back" button
 v0.4.0
-    -make and use MVP package
+    +make and use MVP package
+    +review code
+    -add fragments support
 
     -add DB and saving/loading field state
-    -add fragments support
     -add menu fragment
     -add options fragment
     -add skin support

@@ -11,7 +11,7 @@ import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 
 
-public class GameField extends View implements View.OnTouchListener, EventReceiver{
+class GameField extends View implements View.OnTouchListener, EventReceiver{
     private static final int BACKGROUND_COLOR = Color.WHITE;
     private static final float GAME_FIELD_RATIO = 0.95f;
 
@@ -29,14 +29,14 @@ public class GameField extends View implements View.OnTouchListener, EventReceiv
 
 
 
-    public GameField(Context context, AttributeSet attrs) {
+    GameField(Context context, AttributeSet attrs) {
         super(context, attrs);
         cellArtist = new CellArtist(context);
         this.setBackgroundColor(BACKGROUND_COLOR);
         this.setOnTouchListener(this);
     }
 
-    public void initialize(EventBroadcaster eventBroadcaster) {
+    private void initialize(EventBroadcaster eventBroadcaster) {
         eventManager=eventBroadcaster;
     }
 

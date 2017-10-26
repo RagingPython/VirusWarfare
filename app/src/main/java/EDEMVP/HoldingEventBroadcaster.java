@@ -1,31 +1,37 @@
 package EDEMVP;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
-/**
- * Created by nuzhdin on 24.10.2017.
- */
 
 public class HoldingEventBroadcaster extends EventBroadcaster{
-    HashMap<Integer, Object> holdedEvents = new HashMap<Integer, Object>();
+    private HashMap<Integer, Object> heldEvents = new HashMap<Integer, Object>();
 
     @Override
     public void broadcastEvent(int eventTag, Object o) {
-        holdedEvents.put(eventTag, o);
+        heldEvents.put(eventTag, o);
         super.broadcastEvent(eventTag, o);
     }
 
     public Object getEvent(int eventTag) {
-        return holdedEvents.get(eventTag);
+        return heldEvents.get(eventTag);
     }
 
     public void removeHoldedEvent(int eventTag) {
-        holdedEvents.remove(eventTag);
+        heldEvents.remove(eventTag);
     }
 
     public void reBroadcastEvent(int eventTag){
-        if (holdedEvents.containsKey(eventTag)){
-            broadcastEvent(eventTag, holdedEvents.get(eventTag));
+        if (heldEvents.containsKey(eventTag)){
+            broadcastEvent(eventTag, heldEvents.get(eventTag));
+        }
+    }
+
+    @Override
+    public void registerReceiver(EventReceiver receiver) {
+        super.registerReceiver(receiver);
+        for(int i:heldEvents.keySet()) {
+            receiver.eventMapping(i, heldEvents.get(i));
         }
     }
 }

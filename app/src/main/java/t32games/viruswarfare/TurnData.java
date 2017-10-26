@@ -1,6 +1,6 @@
 package t32games.viruswarfare;
 
-public class TurnData {
-    public int semiturnPointer;
-    public int[] semiturnX, semiturnY;
+class TurnData {
+    int semiturnPointer;
+    int[] semiturnX, semiturnY;
 }

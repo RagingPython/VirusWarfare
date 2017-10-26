@@ -1,14 +1,10 @@
 package t32games.viruswarfare;
 
-/**
- * Created by nuzhdin on 25.10.2017.
- */
-
-public class FieldStateRequest {
-    public TurnData turnData;
+class FieldStateRequest {
+    TurnData turnData;
     FieldStateSnapshot fSS;
 
-    public FieldStateRequest(TurnData turnData){
+    FieldStateRequest(TurnData turnData){
         this.turnData=turnData;
     }
 }

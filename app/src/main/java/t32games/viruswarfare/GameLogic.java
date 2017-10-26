@@ -3,26 +3,26 @@ package t32games.viruswarfare;
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 
-public class GameLogic implements EventReceiver {
-    public static final int IDLE =0;
-    public static final int PLAYER_1 =1;
-    public static final int PLAYER_2 =2;
-    public static final int WINNER_PLAYER_1 =3;
-    public static final int WINNER_PLAYER_2 =4;
-    public static final int WINNER_DRAW =5;
-    public static final int X_FIELD_SIZE = 10;
-    public static final int Y_FIELD_SIZE = 10;
+class GameLogic implements EventReceiver {
+    static final int IDLE =0;
+    static final int PLAYER_1 =1;
+    static final int PLAYER_2 =2;
+    static final int WINNER_PLAYER_1 =3;
+    static final int WINNER_PLAYER_2 =4;
+    static final int WINNER_DRAW =5;
+    static final int X_FIELD_SIZE = 10;
+    static final int Y_FIELD_SIZE = 10;
 
     private int[][] players = new int[10][10];
     private boolean[][] killed = new boolean[10][10];
     private int playerTurn;
     private EventBroadcaster eventManager;
 
-    public GameLogic(){
+    GameLogic(){
         reset();
     }
 
-    public void reset() {
+    private void reset() {
         for(int i = 0; i < 10;i++){
             for(int j = 0; j < 10;j++){
                 players[i][j]=0;
@@ -32,30 +32,18 @@ public class GameLogic implements EventReceiver {
         playerTurn=0;
     }
 
-    public int getPlayerTurn() {
-        return playerTurn;
-    }
-
-    public void startNewGame(){
+    private void startNewGame(){
         reset();
         playerTurn=PLAYER_1;
         eventManager.broadcastEvent(EventTag.PLAYER_TURN_CHANGED, playerTurn);
     }
 
-    public void makeTurn(TurnData tD) {
+    private void makeTurn(TurnData tD) {
         boolean flag =true;
         if (tD.semiturnPointer<3) {
             flag=false;
         }
-        /*
-        for(int i=0;i<tD.semiturnPointer;i++) {
-            AvailabilityRequest aR = new AvailabilityRequest();
-            aR.turnData =tD;
-            aR.x=null;
-            if (!getAvailability(aR)){
-                flag = false;
-            }
-        } */
+
         if (!flag){
             int[][] map = getAvailabilityMap(tD);
             int availabilitySum = 0;
@@ -87,7 +75,7 @@ public class GameLogic implements EventReceiver {
         }
     }
 
-    public void requestFieldData(FieldStateRequest fSR) {
+    private void requestFieldData(FieldStateRequest fSR) {
         int[][] av = new int[X_FIELD_SIZE][Y_FIELD_SIZE];
         fSR.fSS = new FieldStateSnapshot();
         fSR.fSS.setPlayers(players,killed);
@@ -97,17 +85,12 @@ public class GameLogic implements EventReceiver {
     }
 
 
-    public boolean getAvailability(AvailabilityRequest aR){
+    private boolean getAvailability(AvailabilityRequest aR){
         aR.available = (getAvailabilityMap(aR.turnData)[aR.x][aR.y]==1);
         return aR.available;
     }
 
-    public int[][] getAvailabilityMap() {
-        int[][] map=getAvailabilityMap(null);
-        return map;
-    }
-
-    public int[][] getAvailabilityMap(TurnData tD) {
+    private int[][] getAvailabilityMap(TurnData tD) {
         if (tD==null) {
             tD=new TurnData();
             tD.semiturnPointer=0;

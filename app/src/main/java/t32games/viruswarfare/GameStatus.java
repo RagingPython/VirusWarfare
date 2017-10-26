@@ -9,16 +9,12 @@ import android.util.Log;
 import EDEMVP.EventReceiver;
 
 
-public class GameStatus extends AppCompatTextView implements EventReceiver{
+class GameStatus extends AppCompatTextView implements EventReceiver{
     int gameStatus=0;
 
-    public GameStatus(Context context, AttributeSet attrs) {
+    GameStatus(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
-    //public void setGameStatus(int gs) {
-      //  gameStatus=gs;
-   // }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -27,16 +23,16 @@ public class GameStatus extends AppCompatTextView implements EventReceiver{
                 setText("Press START GAME");
                 break;
             case GameLogic.PLAYER_1:
-                setText("Blue turn");
-                break;
-            case GameLogic.PLAYER_2:
                 setText("Red turn");
                 break;
+            case GameLogic.PLAYER_2:
+                setText("Blue turn");
+                break;
             case GameLogic.WINNER_PLAYER_1:
-                setText("BLUE WINS!");
+                setText("RED WINS!");
                 break;
             case GameLogic.WINNER_PLAYER_2:
-                setText("RED WINS!");
+                setText("BLUE WINS!");
                 break;
             case GameLogic.WINNER_DRAW:
                 setText("GAME DRAW!");
@@ -49,7 +45,6 @@ public class GameStatus extends AppCompatTextView implements EventReceiver{
     public void eventMapping(int eventTag, Object o) {
         if (eventTag==EventTag.VIEW_UPDATE_PLAYER_TURN){
             gameStatus=(int) o;
-            Log.d("draw", String.valueOf(gameStatus));
             invalidate();
         }
     }

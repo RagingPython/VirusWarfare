@@ -5,31 +5,31 @@ import EDEMVP.EventReceiver;
 import EDEMVP.HoldingEventBroadcaster;
 
 
-public class TurnControl implements EventReceiver{
-    TurnData turnData= new TurnData();
-    int playerTurn;
-    EventBroadcaster eventManager;
-    HoldingEventBroadcaster viewState;
+class TurnControl implements EventReceiver{
+    private TurnData turnData= new TurnData();
+    private int playerTurn;
+    private EventBroadcaster eventManager;
+    private HoldingEventBroadcaster viewState;
 
-    public TurnControl() {
+    TurnControl() {
         turnData.semiturnPointer=0;
         turnData.semiturnX=new int[3];
         turnData.semiturnY=new int[3];
     }
 
-    public void newTurn(int playerTurn) {
+    private void newTurn(int playerTurn) {
         turnData.semiturnPointer=0;
         this.playerTurn=playerTurn;
         refreshView();
     }
 
-    public void endTurn() {
+    private void endTurn() {
         if ((playerTurn==GameLogic.PLAYER_1)|(playerTurn==GameLogic.PLAYER_2)) {
             eventManager.broadcastEvent(EventTag.TRY_END_TURN, turnData);
         }
     }
 
-    public void cellPressed(int x, int y) {
+    private void cellPressed(int x, int y) {
         boolean flag=false;
         if ((playerTurn==GameLogic.PLAYER_1)|(playerTurn==GameLogic.PLAYER_2)) {
             for (int i = 0; i < turnData.semiturnPointer; i++) {
