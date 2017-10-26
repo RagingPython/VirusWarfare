@@ -24,8 +24,6 @@ class FragmentControl implements EventReceiver {
         this.fragmentContainer=fragmentContainer;
         menuFragment=new MenuFragment();
         gameFragment=new GameFragment();
-
-        goToFragment(menuFragment);
     }
 
     private void goToFragment(Fragment fragment) {
@@ -46,6 +44,12 @@ class FragmentControl implements EventReceiver {
                 break;
             case EventTag.INIT_STAGE_VIEW_STATE:
                 viewState=(HoldingEventBroadcaster) o;
+                break;
+            case EventTag.INIT_FINAL_STAGE:
+                goToFragment(menuFragment);
+                break;
+            case EventTag.MENU_BUTTON_PLAY_CLICK:
+                goToFragment(gameFragment);
                 break;
         }
     }

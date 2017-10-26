@@ -42,7 +42,7 @@ public class MainActivity extends Activity{
         viewState.broadcastEvent(EventTag.INIT_STAGE_EVENT_MANAGER, eventManager);
         viewState.broadcastEvent(EventTag.INIT_STAGE_VIEW_STATE, viewState);
 
-
+        eventManager.broadcastEvent(EventTag.INIT_FINAL_STAGE,null);
     }
 
     @Override

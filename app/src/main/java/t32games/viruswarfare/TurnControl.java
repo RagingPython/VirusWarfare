@@ -92,13 +92,13 @@ class TurnControl implements EventReceiver{
             case EventTag.INIT_STAGE_VIEW_STATE:
                 viewState=(HoldingEventBroadcaster) o;
                 break;
-            case EventTag.FIELD_CELL_CLICK:
+            case EventTag.GAME_CELL_CLICK:
                 cellPressed(((int[])o)[0],((int[])o)[1]);
                 break;
             case EventTag.PLAYER_TURN_CHANGED:
                 newTurn((int) o);
                 break;
-            case EventTag.BUTTON_END_CLICK:
+            case EventTag.GAME_BUTTON_END_CLICK:
                 endTurn();
                 break;
         }

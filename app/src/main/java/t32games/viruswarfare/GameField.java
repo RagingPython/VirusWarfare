@@ -77,7 +77,7 @@ class GameField extends View implements View.OnTouchListener, EventReceiver{
                 break;
             case MotionEvent.ACTION_UP:
                 resolveClick(motionEvent);
-                eventManager.broadcastEvent(EventTag.FIELD_CELL_CLICK, new int[] {clickX, clickY} );
+                eventManager.broadcastEvent(EventTag.GAME_CELL_CLICK, new int[] {clickX, clickY} );
                 break;
         }
         return true;

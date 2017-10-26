@@ -34,8 +34,11 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
     @Override
     public void onClick(View view) {
         if (view==buttonPlay) {
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_PLAY_CLICK,null);
         } else if (view==buttonOptions) {
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_OPTIONS_CLICK,null);
         } else if (view==buttonExit) {
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT_CLICK,null);
         }
     }
 

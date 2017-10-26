@@ -37,9 +37,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Even
     @Override
     public void onClick(View view) {
         if (view==buttonNewGame){
-            eventManager.broadcastEvent(EventTag.BUTTON_NEW_CLICK,null);
+            eventManager.broadcastEvent(EventTag.GAME_BUTTON_NEW_CLICK,null);
         } else if (view==buttonEndTurn){
-            eventManager.broadcastEvent(EventTag.BUTTON_END_CLICK,null);
+            eventManager.broadcastEvent(EventTag.GAME_BUTTON_END_CLICK,null);
         }
     }
 
