@@ -259,7 +259,7 @@ class GameLogic implements EventReceiver {
             case EventTag.INIT_STAGE_EVENT_MANAGER:
                 eventManager = (EventBroadcaster) o;
                 break;
-            case EventTag.GAME_BUTTON_NEW_CLICK:
+            case EventTag.MENU_BUTTON_NEW_GAME:
                 startNewGame();
                 break;
             case EventTag.TRY_END_TURN:

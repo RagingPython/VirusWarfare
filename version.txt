@@ -6,10 +6,10 @@ v0.3.0(D)
 v0.4.0
     +make and use MVP package
     +review code
-    -add fragments support
+    +add fragments support
+    +add menu fragment
 
     -add DB and saving/loading field state
-    -add menu fragment
     -add options fragment
     -add skin support
     -remake buttons

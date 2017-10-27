@@ -2,10 +2,7 @@ package t32games.viruswarfare;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
@@ -31,7 +28,7 @@ public class MainActivity extends Activity implements EventReceiver{
 
         GameLogic gL = new GameLogic();
         TurnControl tC = new TurnControl();
-        FrameLayout fragmentContainer = findViewById(R.id._relativeLayoutFragmentContainer);
+        FrameLayout fragmentContainer = findViewById(R.id._frameLayoutFragmentContainer);
         FragmentControl fC = new FragmentControl(getFragmentManager(),fragmentContainer);
 
 

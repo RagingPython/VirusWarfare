@@ -13,9 +13,9 @@ class EventTag {
     //INTERFACE DRIVEN ACTIONS
     static final int GAME_CELL_CLICK =2000;              //int[2] (Coordinates)
     static final int GAME_BUTTON_END_CLICK =2001;        //null
-    static final int GAME_BUTTON_NEW_CLICK =2002;        //null
-    static final int GAME_BUTTON_MENU_CLICK =2003;       //null
-    static final int MENU_BUTTON_PLAY_CLICK=2004;        //null
+    static final int GAME_BUTTON_MENU_CLICK =2002;       //null
+    static final int MENU_BUTTON_NEW_GAME=2003;          //null
+    static final int MENU_BUTTON_RESUME =2004;           //null
     static final int MENU_BUTTON_OPTIONS_CLICK=2005;     //null
     static final int MENU_BUTTON_EXIT_CLICK=2006;        //null
     //MODEL REQUEST
