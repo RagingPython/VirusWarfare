@@ -4,20 +4,16 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 
-/**
- * Created by nuzhdin on 19.10.2017.
- */
+import EDEMVP.EventReceiver;
 
-public class GameStatus extends AppCompatTextView {
+
+class GameStatus extends AppCompatTextView implements EventReceiver{
     int gameStatus=0;
 
     public GameStatus(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public void setGameStatus(int gs) {
-        gameStatus=gs;
     }
 
     @Override
@@ -27,21 +23,29 @@ public class GameStatus extends AppCompatTextView {
                 setText("Press START GAME");
                 break;
             case GameLogic.PLAYER_1:
-                setText("Blue turn");
-                break;
-            case GameLogic.PLAYER_2:
                 setText("Red turn");
                 break;
+            case GameLogic.PLAYER_2:
+                setText("Blue turn");
+                break;
             case GameLogic.WINNER_PLAYER_1:
-                setText("BLUE WINS!");
+                setText("RED WINS!");
                 break;
             case GameLogic.WINNER_PLAYER_2:
-                setText("RED WINS!");
+                setText("BLUE WINS!");
                 break;
             case GameLogic.WINNER_DRAW:
                 setText("GAME DRAW!");
                 break;
         }
         super.onDraw(canvas);
+    }
+
+    @Override
+    public void eventMapping(int eventTag, Object o) {
+        if (eventTag==EventTag.VIEW_UPDATE_PLAYER_TURN){
+            gameStatus=(int) o;
+            invalidate();
+        }
     }
 }

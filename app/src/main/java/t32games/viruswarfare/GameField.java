@@ -7,15 +7,16 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import EDEMVP.EventBroadcaster;
+import EDEMVP.EventReceiver;
 
-public class GameField extends View implements View.OnTouchListener{
+
+class GameField extends View implements View.OnTouchListener, EventReceiver{
     private static final int BACKGROUND_COLOR = Color.WHITE;
-    private static final int GRID_LINE_COLOR = Color.BLACK;
-    private static final float GRID_LINE_WIDTH =0.07f;
     private static final float GAME_FIELD_RATIO = 0.95f;
 
     private CellArtist cellArtist;
-    private TurnControl tC;
+    private EventBroadcaster eventManager;
     private FieldStateSnapshot fieldState = null;
 
     private int lastHeight = -1;
@@ -32,14 +33,7 @@ public class GameField extends View implements View.OnTouchListener{
         super(context, attrs);
         cellArtist = new CellArtist(context);
         this.setBackgroundColor(BACKGROUND_COLOR);
-    }
-
-    public void setTurnControl(TurnControl turnControl) {
-        tC=turnControl;
-    }
-
-    public void setFieldData(FieldStateSnapshot fSS) {
-        fieldState = fSS;
+        this.setOnTouchListener(this);
     }
 
     @Override
@@ -79,7 +73,7 @@ public class GameField extends View implements View.OnTouchListener{
                 break;
             case MotionEvent.ACTION_UP:
                 resolveClick(motionEvent);
-                tC.cellPressed(clickX, clickY);
+                eventManager.broadcastEvent(EventTag.GAME_CELL_CLICK, new int[] {clickX, clickY} );
                 break;
         }
         return true;
@@ -96,4 +90,17 @@ public class GameField extends View implements View.OnTouchListener{
         return false;
     }
 
+    @Override
+    public void eventMapping(int eventTag, Object o) {
+
+        switch (eventTag) {
+            case EventTag.INIT_STAGE_EVENT_MANAGER:
+                eventManager=(EventBroadcaster) o;
+                break;
+            case EventTag.VIEW_UPDATE_FIELD:
+                fieldState = (FieldStateSnapshot) o;
+                invalidate();
+                break;
+        }
+    }
 }

@@ -1,60 +1,52 @@
 package t32games.viruswarfare;
 
-import android.view.View;
-import android.widget.TextView;
+import EDEMVP.EventBroadcaster;
+import EDEMVP.EventReceiver;
+import EDEMVP.HoldingEventBroadcaster;
 
 
-public class TurnControl implements View.OnClickListener{
-    int[] semiturnX = new int[3];
-    int[] semiturnY = new int[3];
-    int semiturnPointer=0;
-    GameLogic gL;
-    GameField gF;
-    GameStatus gS;
+class TurnControl implements EventReceiver{
+    private TurnData turnData= new TurnData();
+    private int playerTurn;
+    private EventBroadcaster eventManager;
+    private HoldingEventBroadcaster viewState;
 
-    public TurnControl(){}
-
-    public void setGameLogic(GameLogic gameLogic) {
-        gL=gameLogic;
+    TurnControl() {
+        turnData.semiturnPointer=0;
+        turnData.semiturnX=new int[3];
+        turnData.semiturnY=new int[3];
     }
 
-    public void setGameField(GameField gameField) {
-        gF=gameField;
-    }
-
-    public void setGameStatus(GameStatus t){
-        gS=t;
-    }
-
-    public void newTurn() {
-        semiturnPointer=0;
+    private void newTurn(int playerTurn) {
+        turnData.semiturnPointer=0;
+        this.playerTurn=playerTurn;
         refreshView();
     }
 
-    public void endTurn() {
-        if ((gL.getPlayerTurn()==GameLogic.PLAYER_1)|(gL.getPlayerTurn()==GameLogic.PLAYER_2)) {
-            if (gL.makeTurn(semiturnPointer, semiturnX, semiturnY)) {
-                newTurn();
-            }
+    private void endTurn() {
+        if ((playerTurn==GameLogic.PLAYER_1)|(playerTurn==GameLogic.PLAYER_2)) {
+            eventManager.broadcastEvent(EventTag.TRY_END_TURN, turnData);
         }
     }
 
-    public void cellPressed(int x, int y) {
+    private void cellPressed(int x, int y) {
         boolean flag=false;
-        if ((gL.getPlayerTurn()==GameLogic.PLAYER_1)|(gL.getPlayerTurn()==GameLogic.PLAYER_2)) {
-            for (int i = 0; i < semiturnPointer; i++) {
-                if ((semiturnX[i] == x) & (semiturnY[i] == y)) {
+        if ((playerTurn==GameLogic.PLAYER_1)|(playerTurn==GameLogic.PLAYER_2)) {
+            for (int i = 0; i < turnData.semiturnPointer; i++) {
+                if ((turnData.semiturnX[i] == x) & (turnData.semiturnY[i] == y)) {
                     flag = true;
-                    semiturnPointer = i;
+                    turnData.semiturnPointer = i;
                     i = 3;
                     refreshView();
                 }
             }
             if (!flag) {
-                if ((gL.getAvailability(x, y, semiturnPointer,semiturnX,semiturnY)) & (semiturnPointer < 3)) {
-                    semiturnX[semiturnPointer] = x;
-                    semiturnY[semiturnPointer] = y;
-                    semiturnPointer = semiturnPointer + 1;
+                AvailabilityRequest aR = new AvailabilityRequest(turnData, x, y);
+                eventManager.broadcastEvent(EventTag.REQUEST_AVAILABILITY, aR);
+                if ((aR.available) & (turnData.semiturnPointer < 3)) {
+                    turnData.semiturnX[turnData.semiturnPointer] = x;
+                    turnData.semiturnY[turnData.semiturnPointer] = y;
+                    turnData.semiturnPointer = turnData.semiturnPointer + 1;
 
                     refreshView();
                 }
@@ -62,44 +54,53 @@ public class TurnControl implements View.OnClickListener{
         }
     }
 
-    public void startNewGame(){
-        gL.startNewGame();
-        newTurn();
-    };
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId()==R.id._buttonEndTurn){
-            endTurn();
-        }
-        if (view.getId()==R.id._buttonNewGame){
-            startNewGame();
-        }
-    }
 
     private void refreshView() {
+        FieldStateRequest fSR;
 
-        switch (gL.getPlayerTurn()) {
+        switch (playerTurn) {
             case GameLogic.IDLE:
-                gF.setFieldData(null);
+                viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, null);
                 break;
             case GameLogic.PLAYER_1:
             case GameLogic.PLAYER_2:
-                FieldStateSnapshot fSS = gL.getFieldData(semiturnPointer,semiturnX,semiturnY);
-                for (int i=0; i<semiturnPointer; i++){
-                    fSS.setCellSelected(semiturnX[i],semiturnY[i]);
+                fSR = new FieldStateRequest(turnData);
+                eventManager.broadcastEvent(EventTag.REQUEST_FIELD_DATA, fSR);
+                for (int i=0; i<turnData.semiturnPointer; i++){
+                    fSR.fSS.setCellSelected(turnData.semiturnX[i],turnData.semiturnY[i]);
                 }
-                gF.setFieldData(fSS);
+                viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
                 break;
             case GameLogic.WINNER_PLAYER_1:
             case GameLogic.WINNER_PLAYER_2:
-                gF.setFieldData(gL.getFieldData());
+                fSR = new FieldStateRequest(null);
+                eventManager.broadcastEvent(EventTag.REQUEST_FIELD_DATA, fSR);
+                viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
                 break;
             case GameLogic.WINNER_DRAW:
                 break;
         }
-        gS.setGameStatus(gL.getPlayerTurn());
-        gS.invalidate();
-        gF.invalidate();
+        viewState.broadcastEvent(EventTag.VIEW_UPDATE_PLAYER_TURN, playerTurn);
+    }
+
+    @Override
+    public void eventMapping(int eventTag, Object o) {
+        switch (eventTag) {
+            case EventTag.INIT_STAGE_EVENT_MANAGER:
+                eventManager=(EventBroadcaster) o;
+                break;
+            case EventTag.INIT_STAGE_VIEW_STATE:
+                viewState=(HoldingEventBroadcaster) o;
+                break;
+            case EventTag.GAME_CELL_CLICK:
+                cellPressed(((int[])o)[0],((int[])o)[1]);
+                break;
+            case EventTag.PLAYER_TURN_CHANGED:
+                newTurn((int) o);
+                break;
+            case EventTag.GAME_BUTTON_END_CLICK:
+                endTurn();
+                break;
+        }
     }
 }

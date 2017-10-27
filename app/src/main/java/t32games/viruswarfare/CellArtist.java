@@ -10,19 +10,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-public class CellArtist {
-    float cS;
+class CellArtist {
+    private float cS;
 
-    Bitmap empty, player1, player2, player1Selected, player2Selected, player1Available, player2Available, player1Dead, player2Dead, emptyAvailableForPlayer1, emptyAvailableForPlayer2, emptySelectedForPlayer1, emptySelectedForPlayer2;
+    private Bitmap empty, player1, player2, player1Selected, player2Selected, player1Available, player2Available, player1Dead, player2Dead, emptyAvailableForPlayer1, emptyAvailableForPlayer2, emptySelectedForPlayer1, emptySelectedForPlayer2;
 
 
-    Context context;
+    private Context context;
 
-    public CellArtist(Context ctx){
+    CellArtist(Context ctx){
         context=ctx;
     }
 
-    public void initialize(float cellSize) {
+    void initialize(float cellSize) {
         cS=cellSize;
         empty = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty),(int)cS,(int)cS,true);
         player1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1),(int)cS,(int)cS,true);
@@ -40,8 +40,9 @@ public class CellArtist {
 
     }
 
-    public void drawCell(Canvas canvas, float x, float y, int playerTurn, int player, boolean killed, int selected) {
+    void drawCell(Canvas canvas, float x, float y, int playerTurn, int player, boolean killed, int selected) {
         Bitmap toDraw=null;
+
         if (player==0){
             if (selected==FieldStateSnapshot.CELL_NOT_AVAILABLE) {
                 toDraw=empty;
