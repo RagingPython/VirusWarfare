@@ -8,6 +8,8 @@ v0.4.0
     +review code
     +add fragments support
     +add menu fragment
+v0.4.1
+    +make menu useful
 
     -add DB and saving/loading field state
     -add options fragment

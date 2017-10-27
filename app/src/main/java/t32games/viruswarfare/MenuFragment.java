@@ -25,6 +25,7 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
         buttonOptions = (Button) view.findViewById(R.id._buttonOptions);
         buttonExit = (Button) view.findViewById(R.id._buttonExit);
 
+        buttonResume.setOnClickListener(this);
         buttonNewGame.setOnClickListener(this);
         buttonOptions.setOnClickListener(this);
         buttonExit.setOnClickListener(this);
