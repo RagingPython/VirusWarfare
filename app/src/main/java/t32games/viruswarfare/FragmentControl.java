@@ -28,17 +28,16 @@ class FragmentControl implements EventReceiver {
     }
 
     private void goToFragment(Fragment fragment) {
-        FragmentTransaction transaction=fragmentManager.beginTransaction();
         if (currentFragment!=null) {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
-            transaction.remove(currentFragment);
         }
-
+        fragmentManager.popBackStack();
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.replace(fragmentContainer.getId(),fragment);
         transaction.commit();
+        transaction.addToBackStack(null);
         fragmentManager.executePendingTransactions();
         currentFragment=fragment;
-        fragmentManager.popBackStack();
         viewState.registerReceiver((EventReceiver) fragment);
     }
 
@@ -58,9 +57,7 @@ class FragmentControl implements EventReceiver {
                 goToFragment(gameFragment);
                 break;
             case EventTag.GAME_BUTTON_MENU_CLICK:
-                //goToFragment(menuFragment);
-                FragmentTransaction transaction=fragmentManager.beginTransaction();
-                transaction.remove(gameFragment).commit();
+                goToFragment(menuFragment);
                 break;
         }
     }
