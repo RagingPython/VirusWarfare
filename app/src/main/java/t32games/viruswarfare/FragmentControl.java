@@ -31,19 +31,15 @@ class FragmentControl implements EventReceiver {
     private void goToFragment(Fragment fragment) {
         if (currentFragment!=null) {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
-            Log.d("UNREGISTER", currentFragment.getClass().getName());
         }
-        fragmentManager.popBackStack();
-        Log.d("BS", "pop");
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        transaction.replace(fragmentContainer.getId(),fragment);
-        transaction.addToBackStack(null);
-        Log.d("BS", "add");
+        transaction.remove(currentFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.add(fragmentContainer.getId(),fragment);
         transaction.commit();
         fragmentManager.executePendingTransactions();
         currentFragment=fragment;
         viewState.registerReceiver((EventReceiver) fragment);
-        Log.d("REGISTER", fragment.getClass().getName());
     }
 
     @Override
