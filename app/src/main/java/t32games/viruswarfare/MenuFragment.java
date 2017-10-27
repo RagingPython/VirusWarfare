@@ -4,6 +4,7 @@ package t32games.viruswarfare;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
 
     @Override
     public void onClick(View view) {
+        Log.d("munufragment","CLICK");
         if (view==buttonPlay) {
             eventManager.broadcastEvent(EventTag.MENU_BUTTON_PLAY_CLICK,null);
         } else if (view==buttonOptions) {
