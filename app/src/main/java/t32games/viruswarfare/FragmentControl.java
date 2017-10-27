@@ -4,6 +4,7 @@ package t32games.viruswarfare;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -30,15 +31,19 @@ class FragmentControl implements EventReceiver {
     private void goToFragment(Fragment fragment) {
         if (currentFragment!=null) {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
+            Log.d("UNREGISTER", currentFragment.getClass().getName());
         }
         fragmentManager.popBackStack();
+        Log.d("BS", "pop");
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.replace(fragmentContainer.getId(),fragment);
-        transaction.commit();
         transaction.addToBackStack(null);
+        Log.d("BS", "add");
+        transaction.commit();
         fragmentManager.executePendingTransactions();
         currentFragment=fragment;
         viewState.registerReceiver((EventReceiver) fragment);
+        Log.d("REGISTER", fragment.getClass().getName());
     }
 
     @Override
