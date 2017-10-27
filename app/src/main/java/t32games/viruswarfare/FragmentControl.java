@@ -33,9 +33,7 @@ class FragmentControl implements EventReceiver {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
         }
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        transaction.remove(currentFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.add(fragmentContainer.getId(),fragment);
+        transaction.replace(fragmentContainer.getId(),fragment);
         transaction.commit();
         fragmentManager.executePendingTransactions();
         currentFragment=fragment;

@@ -35,7 +35,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Even
         buttonEndTurn.setOnClickListener(this);
         buttonMenu.setOnClickListener(this);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     @Override
