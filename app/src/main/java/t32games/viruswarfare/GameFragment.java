@@ -24,7 +24,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Even
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view=inflater.inflate(R.layout.game_fragment, container);
+        view=inflater.inflate(R.layout.game_fragment, null);
         buttonNewGame = (Button) view.findViewById(R.id._buttonNewGame);
         buttonEndTurn = (Button) view.findViewById(R.id._buttonEndTurn);
         buttonMenu = (Button) view.findViewById(R.id._buttonMenu);

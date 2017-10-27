@@ -20,7 +20,7 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.menu_fragment, container);
+        View view = inflater.inflate(R.layout.menu_fragment, null);
         buttonPlay = (Button) view.findViewById(R.id._buttonPlay);
         buttonOptions = (Button) view.findViewById(R.id._buttonOptions);
         buttonExit = (Button) view.findViewById(R.id._buttonExit);
