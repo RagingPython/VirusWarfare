@@ -29,15 +29,18 @@ class FragmentControl implements EventReceiver {
     }
 
     private void goToFragment(Fragment fragment) {
+        Log.d("FC", "goToFragment");
         if (currentFragment!=null) {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
         }
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.replace(fragmentContainer.getId(),fragment);
+        Log.d("FC", "commit");
         transaction.commit();
         fragmentManager.executePendingTransactions();
         currentFragment=fragment;
         viewState.registerReceiver((EventReceiver) fragment);
+        Log.d("FC", "end");
     }
 
     @Override
