@@ -10,8 +10,8 @@ v0.4.0
     +add menu fragment
 v0.4.1
     +make menu useful
+    +add DB and saving/loading field state
 
-    -add DB and saving/loading field state
     -add options fragment
     -add skin support
     -remake buttons

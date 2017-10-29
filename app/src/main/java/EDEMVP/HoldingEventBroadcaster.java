@@ -1,5 +1,7 @@
 package EDEMVP;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -14,6 +16,9 @@ public class HoldingEventBroadcaster extends EventBroadcaster{
     }
 
     public Object getEvent(int eventTag) {
+        for (int i:heldEvents.keySet()) {
+            Log.d("ViewState", String.valueOf(i));
+        }
         return heldEvents.get(eventTag);
     }
 

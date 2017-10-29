@@ -43,4 +43,14 @@ class FieldStateSnapshot {
     int getPlayerTurn() {
         return playerTurn;
     }
+
+    int getXCount() { return players.length;}
+
+    int getYCount() {
+        if (players.length>0) {
+            return players[0].length;
+        } else {
+            return 0;
+        }
+    }
 }
