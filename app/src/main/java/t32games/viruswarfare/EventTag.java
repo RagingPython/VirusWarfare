@@ -20,6 +20,7 @@ class EventTag {
     static final int MENU_BUTTON_RESUME =2004;      //null
     static final int MENU_BUTTON_OPTIONS_CLICK=2005;//null
     static final int MENU_BUTTON_EXIT_CLICK=2006;   //null
+    static final int BACK_BUTTON=2006;              //null
     //MODEL REQUEST
     static final int TRY_END_TURN=3000;             //TurnData
     static final int REQUEST_FIELD_DATA=3001;       //FieldStateRequest

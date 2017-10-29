@@ -1,7 +1,7 @@
 Tracking started at v0.3.0
 
 v0.3.0(D)
-    +added simple cells PNGs
+    +add simple cells PNGs
     +intercept "back" button
 v0.4.0
     +make and use MVP package
@@ -11,9 +11,15 @@ v0.4.0
 v0.4.1
     +make menu useful
     +add DB and saving/loading field state
+v0.4.2
+    +improve save/load performance
+    +make back button usable
 
     -add options fragment
     -add skin support
     -remake buttons
     -add button style
     -add comments
+    -solve problem with landscape
+    -add instructions
+    -add bot (try to decreas enemy turn posibilitys)

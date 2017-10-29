@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements EventReceiver{
 
     @Override
     public void onBackPressed() {
-
+        eventManager.broadcastEvent(EventTag.BACK_BUTTON,null);
     }
 
     @Override
