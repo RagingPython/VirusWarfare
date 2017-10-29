@@ -2,10 +2,7 @@ package t32games.viruswarfare;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
@@ -31,15 +28,15 @@ public class MainActivity extends Activity implements EventReceiver{
 
         GameLogic gL = new GameLogic();
         TurnControl tC = new TurnControl();
-        FrameLayout fragmentContainer = findViewById(R.id._relativeLayoutFragmentContainer);
+        FrameLayout fragmentContainer = findViewById(R.id._frameLayoutFragmentContainer);
         FragmentControl fC = new FragmentControl(getFragmentManager(),fragmentContainer);
-
-
+        DBController dbController = new DBController(getApplicationContext());
 
         eventManager.registerReceiver(this);
         eventManager.registerReceiver(gL);
         eventManager.registerReceiver(tC);
         eventManager.registerReceiver(fC);
+        eventManager.registerReceiver(dbController);
 
         eventManager.broadcastEvent(EventTag.INIT_STAGE_EVENT_MANAGER, eventManager);
         eventManager.broadcastEvent(EventTag.INIT_STAGE_VIEW_STATE, viewState);
@@ -52,6 +49,18 @@ public class MainActivity extends Activity implements EventReceiver{
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        eventManager.broadcastEvent(EventTag.LOAD_INITIATION, null);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        eventManager.broadcastEvent(EventTag.SAVE_INITIATION, null);
+        super.onPause();
     }
 
     @Override

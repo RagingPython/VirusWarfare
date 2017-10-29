@@ -1,5 +1,7 @@
 package t32games.viruswarfare;
 
+import android.util.Log;
+
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 
@@ -84,6 +86,13 @@ class GameLogic implements EventReceiver {
 
     }
 
+    private FieldStateSnapshot formFieldStateSnapshot(){
+        FieldStateSnapshot fSS = new FieldStateSnapshot();
+        fSS.setPlayers(players,killed);
+        fSS.setAvailability(getAvailabilityMap(null));
+        fSS.setPlayerTurn(playerTurn);
+        return fSS;
+    }
 
     private boolean getAvailability(AvailabilityRequest aR){
         aR.available = (getAvailabilityMap(aR.turnData)[aR.x][aR.y]==1);
@@ -253,13 +262,27 @@ class GameLogic implements EventReceiver {
         return false;
     }
 
+    private void setFieldState(FieldStateSnapshot fSS) {
+        if (fSS!=null) {
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    players[i][j] = fSS.getPlayer(i, j);
+                    killed[i][j] = fSS.getKilled(i, j);
+                }
+            }
+            playerTurn = fSS.getPlayerTurn();
+            Log.d("playerTurn", String .valueOf(playerTurn));
+            eventManager.broadcastEvent(EventTag.PLAYER_TURN_CHANGED, playerTurn);
+        }
+    }
+
     @Override
     public void eventMapping(int eventTag, Object o) {
         switch (eventTag) {
             case EventTag.INIT_STAGE_EVENT_MANAGER:
                 eventManager = (EventBroadcaster) o;
                 break;
-            case EventTag.GAME_BUTTON_NEW_CLICK:
+            case EventTag.MENU_BUTTON_NEW_GAME:
                 startNewGame();
                 break;
             case EventTag.TRY_END_TURN:
@@ -271,6 +294,11 @@ class GameLogic implements EventReceiver {
             case EventTag.REQUEST_AVAILABILITY:
                 getAvailability((AvailabilityRequest) o);
                 break;
+            case EventTag.SET_MODEL_STATE:
+                setFieldState((FieldStateSnapshot) o);
+                break;
+            case EventTag.SAVE_INITIATION:
+                eventManager.broadcastEvent(EventTag.SAVE_STATE, formFieldStateSnapshot());
         }
     }
 }

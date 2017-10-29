@@ -4,10 +4,7 @@ package t32games.viruswarfare;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-
 import EDEMVP.EventBroadcaster;
 import EDEMVP.EventReceiver;
 import EDEMVP.HoldingEventBroadcaster;
@@ -29,18 +26,24 @@ class FragmentControl implements EventReceiver {
     }
 
     private void goToFragment(Fragment fragment) {
-        Log.d("FC", "goToFragment");
         if (currentFragment!=null) {
             viewState.unRegisterReceiver((EventReceiver) currentFragment);
         }
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.replace(fragmentContainer.getId(),fragment);
-        Log.d("FC", "commit");
         transaction.commit();
         fragmentManager.executePendingTransactions();
         currentFragment=fragment;
         viewState.registerReceiver((EventReceiver) fragment);
-        Log.d("FC", "end");
+    }
+
+    private void on_Menu_Button_Resume(){
+        Object o = viewState.getEvent(EventTag.VIEW_UPDATE_PLAYER_TURN);
+        if (o!=null){
+            if(((int) o)!=0) {
+                goToFragment(gameFragment);
+            }
+        }
     }
 
     @Override
@@ -55,8 +58,11 @@ class FragmentControl implements EventReceiver {
             case EventTag.INIT_FINAL_STAGE:
                 goToFragment(menuFragment);
                 break;
-            case EventTag.MENU_BUTTON_PLAY_CLICK:
+            case EventTag.MENU_BUTTON_NEW_GAME:
                 goToFragment(gameFragment);
+                break;
+            case EventTag.MENU_BUTTON_RESUME:
+                on_Menu_Button_Resume();
                 break;
             case EventTag.GAME_BUTTON_MENU_CLICK:
                 goToFragment(menuFragment);
