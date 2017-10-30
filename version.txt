@@ -14,12 +14,11 @@ v0.4.1
 v0.4.2
     +improve save/load performance
     +make back button usable
-
-    -add options fragment
-    -add skin support
-    -remake buttons
     -add button style
+    -remake buttons
+
+    -add instructions
+    ?add skin support
     -add comments
     -solve problem with landscape
-    -add instructions
     -add bot (try to decreas enemy turn posibilitys)
