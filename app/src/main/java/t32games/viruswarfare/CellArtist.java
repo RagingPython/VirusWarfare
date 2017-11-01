@@ -24,19 +24,19 @@ class CellArtist {
 
     void initialize(float cellSize) {
         cS=cellSize;
-        empty = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty),(int)cS,(int)cS,true);
-        player1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1),(int)cS,(int)cS,true);
-        player2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2),(int)cS,(int)cS,true);
-        player1Selected = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1_selected),(int)cS,(int)cS,true);
-        player2Selected = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2_selected),(int)cS,(int)cS,true);
-        player1Available = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1_available),(int)cS,(int)cS,true);
-        player2Available = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2_available),(int)cS,(int)cS,true);
-        player1Dead = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player1_dead),(int)cS,(int)cS,true);
-        player2Dead = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_player2_dead),(int)cS,(int)cS,true);
-        emptyAvailableForPlayer1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_available_for_player1),(int)cS,(int)cS,true);
-        emptyAvailableForPlayer2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_available_for_player2),(int)cS,(int)cS,true);
-        emptySelectedForPlayer1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_selected_for_player1),(int)cS,(int)cS,true);
-        emptySelectedForPlayer2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.cell_empty_selected_for_player2),(int)cS,(int)cS,true);
+        empty = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.e),(int)cS,(int)cS,true);
+        player1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p1),(int)cS,(int)cS,true);
+        player2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p2),(int)cS,(int)cS,true);
+        player1Selected = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p1_s),(int)cS,(int)cS,true);
+        player2Selected = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p2_s),(int)cS,(int)cS,true);
+        player1Available = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p1_a),(int)cS,(int)cS,true);
+        player2Available = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p2_a),(int)cS,(int)cS,true);
+        player1Dead = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p1_k),(int)cS,(int)cS,true);
+        player2Dead = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.p2_k),(int)cS,(int)cS,true);
+        emptyAvailableForPlayer1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.e_a),(int)cS,(int)cS,true);
+        emptyAvailableForPlayer2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.e_a),(int)cS,(int)cS,true);
+        emptySelectedForPlayer1 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.e_s),(int)cS,(int)cS,true);
+        emptySelectedForPlayer2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(),R.drawable.e_s),(int)cS,(int)cS,true);
 
     }
 
