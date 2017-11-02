@@ -46,6 +46,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Even
         }
     }
 
+
+
     @Override
     public void eventMapping(int eventTag, Object o) {
         switch (eventTag) {

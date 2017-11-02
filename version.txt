@@ -14,16 +14,15 @@ v0.4.1
 v0.4.2
     +improve save/load performance
     +make back button usable
+    +improve turn control (visible availability)
+    -bug with back button
+    -bug: buttons unable after turn off
+    -bug: crash on swipe-out of field
     -add button style
-    -remake buttons
-    -improve turn control (visible availability)
 
     -add instructions
     ?add skin support
     -add comments
     -solve problem with landscape
     -add bot (try to decreas enemy turn posibilitys)
-    -bug with back button
-    -bug: buttons unable after turn off
-    -bug: crash on swipe-out of field
     -improve color scheme

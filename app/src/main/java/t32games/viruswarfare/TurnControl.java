@@ -66,8 +66,8 @@ class TurnControl implements EventReceiver{
             case GameLogic.PLAYER_2:
                 fSR = new FieldStateRequest(turnData);
                 eventManager.broadcastEvent(EventTag.REQUEST_FIELD_DATA, fSR);
-                for (int i=0; i<turnData.semiturnPointer; i++){
-                    fSR.fSS.setCellSelected(turnData.semiturnX[i],turnData.semiturnY[i]);
+                for (int i = 0; i < turnData.semiturnPointer; i++) {
+                    fSR.fSS.setCellSelected(turnData.semiturnX[i], turnData.semiturnY[i]);
                 }
                 viewState.broadcastEvent(EventTag.VIEW_UPDATE_FIELD, fSR.fSS);
                 break;
