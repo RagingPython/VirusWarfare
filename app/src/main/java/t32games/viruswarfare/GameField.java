@@ -82,7 +82,7 @@ class GameField extends View implements View.OnTouchListener, EventReceiver{
     private boolean resolveClick(MotionEvent motionEvent) {
         float cx = motionEvent.getX() - leftSpacing;
         float cy = motionEvent.getY() - topSpacing;
-        if((cx<cS*GameLogic.X_FIELD_SIZE)&(cy<cS*GameLogic.Y_FIELD_SIZE)) {
+        if((cx<cS*GameLogic.X_FIELD_SIZE)&(cy<cS*GameLogic.Y_FIELD_SIZE)&(cx>0)&(cy>0)) {
             clickX=(int) Math.floor(cx/cS);
             clickY=(int) Math.floor(cy/cS);
             return true;

@@ -22,7 +22,7 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
         buttonResume = (Button) view.findViewById(R.id._buttonResume);
         buttonNewGame = (Button) view.findViewById(R.id._buttonNewGame);
-        buttonOptions = (Button) view.findViewById(R.id._buttonOptions);
+        buttonOptions = (Button) view.findViewById(R.id._buttonTutorial);
         buttonExit = (Button) view.findViewById(R.id._buttonExit);
 
         buttonResume.setOnClickListener(this);

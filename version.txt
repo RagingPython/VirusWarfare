@@ -12,17 +12,19 @@ v0.4.1
     +make menu useful
     +add DB and saving/loading field state
 v0.4.2
-    +improve save/load performance
     +make back button usable
+    +improve field visual design
     +improve turn control (visible availability)
-    -bug with back button
-    -bug: buttons unable after turn off
-    -bug: crash on swipe-out of field
+    +bug with back button
+    +bug: crash on swipe-out of field
+    +disable landscape
     -add button style
+    -add tutorial
 
-    -add instructions
-    ?add skin support
+    -improve save/load performance
     -add comments
-    -solve problem with landscape
     -add bot (try to decreas enemy turn posibilitys)
     -improve color scheme
+    -change EventTag system
+
+    ?bug: buttons unable after turn off
