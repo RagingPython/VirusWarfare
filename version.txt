@@ -18,7 +18,7 @@ v0.4.2
     +bug with back button
     +bug: crash on swipe-out of field
     +disable landscape
-    -add button style
+    +add button style
     -add tutorial
 
     -improve save/load performance
