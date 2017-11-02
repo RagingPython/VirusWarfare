@@ -12,6 +12,7 @@ public class MainActivity extends Activity implements EventReceiver{
 
     HoldingEventBroadcaster viewState;
     EventBroadcaster eventManager;
+    FrameLayout fragmentContainer;
 
 
     @Override
@@ -28,7 +29,7 @@ public class MainActivity extends Activity implements EventReceiver{
 
         GameLogic gL = new GameLogic();
         TurnControl tC = new TurnControl();
-        FrameLayout fragmentContainer = findViewById(R.id._frameLayoutFragmentContainer);
+        fragmentContainer = findViewById(R.id._frameLayoutFragmentContainer);
         FragmentControl fC = new FragmentControl(getFragmentManager(),fragmentContainer);
         DBController dbController = new DBController(getApplicationContext());
 
@@ -48,7 +49,7 @@ public class MainActivity extends Activity implements EventReceiver{
 
     @Override
     public void onBackPressed() {
-        //eventManager.broadcastEvent(EventTag.BACK_BUTTON,null);
+        eventManager.broadcastEvent(EventTag.BACK_BUTTON,null);
     }
 
     @Override
@@ -67,6 +68,7 @@ public class MainActivity extends Activity implements EventReceiver{
     public void eventMapping(int eventTag, Object o) {
         switch (eventTag) {
             case EventTag.MENU_BUTTON_EXIT_CLICK:
+                fragmentContainer.removeAllViews();
                 finish();
                 break;
         }

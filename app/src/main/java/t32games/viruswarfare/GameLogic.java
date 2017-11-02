@@ -115,7 +115,7 @@ class GameLogic implements EventReceiver {
         }
 
 
-        if (tD.semiturnPointer>2) {
+        if (tD.semiturnPointer<3) {
             for (int s = -1; s < tD.semiturnPointer; s++) {
                 if (s != -1) {
                     if ((map[tD.semiturnX[s]][tD.semiturnY[s]] == 0) & (p[0][0] != 0) & (p[X_FIELD_SIZE - 1][Y_FIELD_SIZE - 1] != 0)) {
@@ -180,7 +180,7 @@ class GameLogic implements EventReceiver {
                 map[X_FIELD_SIZE - 1][0] = 1;
             }
         }
-        
+
         return map;
     }
 
