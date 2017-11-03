@@ -98,7 +98,7 @@ class TurnControl implements EventReceiver{
             case EventTag.PLAYER_TURN_CHANGED:
                 newTurn((int) o);
                 break;
-            case EventTag.GAME_BUTTON_END_CLICK:
+            case EventTag.GAME_BUTTON_END_TURN:
                 endTurn();
                 break;
         }

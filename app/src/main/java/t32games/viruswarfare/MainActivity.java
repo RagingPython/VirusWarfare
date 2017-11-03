@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements EventReceiver{
     @Override
     public void eventMapping(int eventTag, Object o) {
         switch (eventTag) {
-            case EventTag.MENU_BUTTON_EXIT_CLICK:
+            case EventTag.MENU_BUTTON_EXIT:
                 fragmentContainer.removeAllViews();
                 finish();
                 break;

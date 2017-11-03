@@ -16,6 +16,7 @@ class FragmentControl implements EventReceiver {
     private HoldingEventBroadcaster viewState;
     private MenuFragment menuFragment;
     private GameFragment gameFragment;
+    private TutorialFragment tutorialFragment;
     private Fragment currentFragment = null;
 
     FragmentControl(FragmentManager fragmentManager, FrameLayout fragmentContainer) {
@@ -49,8 +50,11 @@ class FragmentControl implements EventReceiver {
     private void  onBackButton() {
         if (currentFragment==gameFragment){
             eventManager.broadcastEvent(EventTag.MENU_BUTTON_NEW_GAME,null);
-        } else  if (currentFragment==menuFragment) {
+        } else if (currentFragment==menuFragment) {
             goToFragment(gameFragment);
+        } else if (currentFragment==tutorialFragment){
+            goToFragment(menuFragment);
+            tutorialFragment=null;
         }
     }
 
@@ -72,10 +76,17 @@ class FragmentControl implements EventReceiver {
             case EventTag.MENU_BUTTON_RESUME:
                 onMenuButtonResume();
                 break;
-            case EventTag.GAME_BUTTON_MENU_CLICK:
+            case EventTag.GAME_BUTTON_MENU:
                 goToFragment(menuFragment);
                 break;
             case EventTag.BACK_BUTTON:
+                onBackButton();
+                break;
+            case EventTag.MENU_BUTTON_TUTORIAL:
+                tutorialFragment = new TutorialFragment();
+                goToFragment(tutorialFragment);
+                break;
+            case EventTag.TUTORIAL_BUTTON_OK:
                 onBackButton();
                 break;
         }

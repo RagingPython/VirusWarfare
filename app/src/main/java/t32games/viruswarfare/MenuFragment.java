@@ -40,9 +40,9 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
         }else if (view== buttonNewGame) {
             eventManager.broadcastEvent(EventTag.MENU_BUTTON_NEW_GAME,null);
         } else if (view==buttonOptions) {
-            eventManager.broadcastEvent(EventTag.MENU_BUTTON_OPTIONS_CLICK,null);
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_TUTORIAL,null);
         } else if (view==buttonExit) {
-            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT_CLICK,null);
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT,null);
         }
     }
 

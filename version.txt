@@ -26,5 +26,6 @@ v0.4.2
     -add bot (try to decreas enemy turn posibilitys)
     -improve color scheme
     -change EventTag system
+    -add memory control
 
     ?bug: buttons unable after turn off
