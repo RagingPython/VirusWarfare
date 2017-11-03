@@ -20,15 +20,15 @@ public class TutorialFragment extends Fragment implements EventReceiver, View.On
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view=inflater.inflate(R.layout.game_fragment, container, false);
-
-
+        view=inflater.inflate(R.layout.tutorial_fragmetn, container, false);
+        buttonOk=view.findViewById(R.id._buttonOk);
+        buttonOk.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View view) {
-
+        eventManager.broadcastEvent(EventTag.TUTORIAL_BUTTON_OK,null);
     }
 
     @Override

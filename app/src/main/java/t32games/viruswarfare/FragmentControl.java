@@ -49,9 +49,9 @@ class FragmentControl implements EventReceiver {
 
     private void  onBackButton() {
         if (currentFragment==gameFragment){
-            eventManager.broadcastEvent(EventTag.MENU_BUTTON_NEW_GAME,null);
+            goToFragment(menuFragment);
         } else if (currentFragment==menuFragment) {
-            goToFragment(gameFragment);
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT,null);
         } else if (currentFragment==tutorialFragment){
             goToFragment(menuFragment);
             tutorialFragment=null;
