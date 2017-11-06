@@ -10,17 +10,15 @@ import EDEMVP.EventReceiver;
 class DBController implements EventReceiver{
     private static final String WIPE_FIELD_STATE =  "delete from FIELD_STATE";
 
-    DBOpenHelper dbOpenHelper;
-    Context context;
-    EventBroadcaster eventManager;
+    private EventBroadcaster eventManager;
+    private SQLiteDatabase database;
 
     DBController(Context context) {
-        this.dbOpenHelper = new DBOpenHelper(context);
-        this.context = context;
+        DBOpenHelper dbOpenHelper = new DBOpenHelper(context);
+        database=dbOpenHelper.getWritableDatabase();
     }
 
     private void saveState(FieldStateSnapshot fSS) {
-        SQLiteDatabase database = dbOpenHelper.getWritableDatabase();
         database.execSQL(WIPE_FIELD_STATE);
         String s;
         for (int x=0; x<fSS.getXCount(); x++) {
@@ -37,7 +35,6 @@ class DBController implements EventReceiver{
     }
 
     private FieldStateSnapshot loadState() {
-        SQLiteDatabase database = dbOpenHelper.getReadableDatabase();
         FieldStateSnapshot fSS;
         String[] columns = {"max(x)","max(y)"};
         Cursor cursor = database.query("FIELD_STATE", null, null, null, null, null, null);

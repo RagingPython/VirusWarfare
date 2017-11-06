@@ -14,12 +14,14 @@ class EventTag {
     static final int VIEW_UPDATE_BUTTON_END=1002;   //?
     //INTERFACE DRIVEN ACTIONS
     static final int GAME_CELL_CLICK =2000;         //int[2] (Coordinates)
-    static final int GAME_BUTTON_END_CLICK =2001;   //null
-    static final int GAME_BUTTON_MENU_CLICK =2002;  //null
+    static final int GAME_BUTTON_END_TURN =2001;   //null
+    static final int GAME_BUTTON_MENU =2002;  //null
     static final int MENU_BUTTON_NEW_GAME=2003;     //null
     static final int MENU_BUTTON_RESUME =2004;      //null
-    static final int MENU_BUTTON_OPTIONS_CLICK=2005;//null
-    static final int MENU_BUTTON_EXIT_CLICK=2006;   //null
+    static final int MENU_BUTTON_TUTORIAL =2005;//null
+    static final int MENU_BUTTON_EXIT =2006;   //null
+    static final int TUTORIAL_BUTTON_OK=2007;       //null
+    static final int BACK_BUTTON=2008;              //null
     //MODEL REQUEST
     static final int TRY_END_TURN=3000;             //TurnData
     static final int REQUEST_FIELD_DATA=3001;       //FieldStateRequest

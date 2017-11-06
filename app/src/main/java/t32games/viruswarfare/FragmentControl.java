@@ -16,6 +16,7 @@ class FragmentControl implements EventReceiver {
     private HoldingEventBroadcaster viewState;
     private MenuFragment menuFragment;
     private GameFragment gameFragment;
+    private TutorialFragment tutorialFragment;
     private Fragment currentFragment = null;
 
     FragmentControl(FragmentManager fragmentManager, FrameLayout fragmentContainer) {
@@ -37,12 +38,23 @@ class FragmentControl implements EventReceiver {
         viewState.registerReceiver((EventReceiver) fragment);
     }
 
-    private void on_Menu_Button_Resume(){
+    private void onMenuButtonResume(){
         Object o = viewState.getEvent(EventTag.VIEW_UPDATE_PLAYER_TURN);
         if (o!=null){
             if(((int) o)!=0) {
                 goToFragment(gameFragment);
             }
+        }
+    }
+
+    private void  onBackButton() {
+        if (currentFragment==gameFragment){
+            goToFragment(menuFragment);
+        } else if (currentFragment==menuFragment) {
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT,null);
+        } else if (currentFragment==tutorialFragment){
+            goToFragment(menuFragment);
+            tutorialFragment=null;
         }
     }
 
@@ -62,10 +74,20 @@ class FragmentControl implements EventReceiver {
                 goToFragment(gameFragment);
                 break;
             case EventTag.MENU_BUTTON_RESUME:
-                on_Menu_Button_Resume();
+                onMenuButtonResume();
                 break;
-            case EventTag.GAME_BUTTON_MENU_CLICK:
+            case EventTag.GAME_BUTTON_MENU:
                 goToFragment(menuFragment);
+                break;
+            case EventTag.BACK_BUTTON:
+                onBackButton();
+                break;
+            case EventTag.MENU_BUTTON_TUTORIAL:
+                tutorialFragment = new TutorialFragment();
+                goToFragment(tutorialFragment);
+                break;
+            case EventTag.TUTORIAL_BUTTON_OK:
+                onBackButton();
                 break;
         }
     }

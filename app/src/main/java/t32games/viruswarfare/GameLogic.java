@@ -78,7 +78,6 @@ class GameLogic implements EventReceiver {
     }
 
     private void requestFieldData(FieldStateRequest fSR) {
-        int[][] av = new int[X_FIELD_SIZE][Y_FIELD_SIZE];
         fSR.fSS = new FieldStateSnapshot();
         fSR.fSS.setPlayers(players,killed);
         fSR.fSS.setAvailability(getAvailabilityMap(fSR.turnData));
@@ -115,43 +114,46 @@ class GameLogic implements EventReceiver {
             }
         }
 
-        for (int s=-1; s<tD.semiturnPointer;s++) {
-            if (s!=-1) {
-                if((map[tD.semiturnX[s]][tD.semiturnY[s]] == 0)&(p[0][0]!=0)&(p[X_FIELD_SIZE-1][Y_FIELD_SIZE-1]!=0)) {
-                    return null;
-                } else {
-                    if (p[tD.semiturnX[s]][tD.semiturnY[s]] == 0) {
-                        p[tD.semiturnX[s]][tD.semiturnY[s]] = playerTurn;
-                        k[tD.semiturnX[s]][tD.semiturnY[s]]=false;
+
+        if (tD.semiturnPointer<3) {
+            for (int s = -1; s < tD.semiturnPointer; s++) {
+                if (s != -1) {
+                    if ((map[tD.semiturnX[s]][tD.semiturnY[s]] == 0) & (p[0][0] != 0) & (p[X_FIELD_SIZE - 1][Y_FIELD_SIZE - 1] != 0)) {
+                        return null;
                     } else {
-                        k[tD.semiturnX[s]][tD.semiturnY[s]]=true;
+                        if (p[tD.semiturnX[s]][tD.semiturnY[s]] == 0) {
+                            p[tD.semiturnX[s]][tD.semiturnY[s]] = playerTurn;
+                            k[tD.semiturnX[s]][tD.semiturnY[s]] = false;
+                        } else {
+                            k[tD.semiturnX[s]][tD.semiturnY[s]] = true;
+                        }
                     }
                 }
-            }
 
-            for (int i = 0; i < X_FIELD_SIZE; i++) {
-                for (int j = 0; j < Y_FIELD_SIZE; j++) {
-                    if ((p[i][j] == playerTurn) & (!k[i][j])) {
-                        map[i][j] = 1;
-                    } else {
-                        map[i][j] = 0;
+                for (int i = 0; i < X_FIELD_SIZE; i++) {
+                    for (int j = 0; j < Y_FIELD_SIZE; j++) {
+                        if ((p[i][j] == playerTurn) & (!k[i][j])) {
+                            map[i][j] = 1;
+                        } else {
+                            map[i][j] = 0;
+                        }
                     }
                 }
-            }
 
-            boolean flag = true;
-            while (flag) {
-                flag = false;
-                for (int x = 0; x < X_FIELD_SIZE; x++) {
-                    for (int y = 0; y < Y_FIELD_SIZE; y++) {
-                        if ((map[x][y] == 0) & (p[x][y] != playerTurn)) {
-                            for (int dx = -1; dx < 2; dx++) {
-                                for (int dy = -1; dy < 2; dy++) {
-                                    if (!((dx == 0) & (dy == 0))) {
-                                        if ((x + dx >= 0) & (x + dx < X_FIELD_SIZE) & (y + dy >= 0) & (y + dy < Y_FIELD_SIZE)) {
-                                            if (((map[x + dx][y + dy] == 1) & (p[x + dx][y + dy] != 0)) & (((p[x + dx][y + dy] == playerTurn) & (!k[x + dx][y + dy])) | ((p[x + dx][y + dy] != playerTurn) & (k[x + dx][y + dy])))) {
-                                                map[x][y] = 1;
-                                                flag = true;
+                boolean flag = true;
+                while (flag) {
+                    flag = false;
+                    for (int x = 0; x < X_FIELD_SIZE; x++) {
+                        for (int y = 0; y < Y_FIELD_SIZE; y++) {
+                            if ((map[x][y] == 0) & (p[x][y] != playerTurn)) {
+                                for (int dx = -1; dx < 2; dx++) {
+                                    for (int dy = -1; dy < 2; dy++) {
+                                        if (!((dx == 0) & (dy == 0))) {
+                                            if ((x + dx >= 0) & (x + dx < X_FIELD_SIZE) & (y + dy >= 0) & (y + dy < Y_FIELD_SIZE)) {
+                                                if (((map[x + dx][y + dy] == 1) & (p[x + dx][y + dy] != 0)) & (((p[x + dx][y + dy] == playerTurn) & (!k[x + dx][y + dy])) | ((p[x + dx][y + dy] != playerTurn) & (k[x + dx][y + dy])))) {
+                                                    map[x][y] = 1;
+                                                    flag = true;
+                                                }
                                             }
                                         }
                                     }
@@ -159,24 +161,24 @@ class GameLogic implements EventReceiver {
                             }
                         }
                     }
-                }
 
-            }
-        }
-        for (int i=0;i<X_FIELD_SIZE;i++) {
-            for (int j = 0; j < Y_FIELD_SIZE; j++) {
-                if(((map[i][j]==1)&(p[i][j]==playerTurn))|(k[i][j])) {
-                    map[i][j]=0;
                 }
             }
-        }
+            for (int i = 0; i < X_FIELD_SIZE; i++) {
+                for (int j = 0; j < Y_FIELD_SIZE; j++) {
+                    if (((map[i][j] == 1) & (p[i][j] == playerTurn)) | (k[i][j])) {
+                        map[i][j] = 0;
+                    }
+                }
+            }
 
 
-        if ((playerTurn==PLAYER_1)&(players[0][Y_FIELD_SIZE-1]!=PLAYER_1)) {
-            map[0][Y_FIELD_SIZE-1]=1;
-        }
-        if ((playerTurn==PLAYER_2)&(players[X_FIELD_SIZE-1][0]!=PLAYER_2)) {
-            map[X_FIELD_SIZE-1][0]=1;
+            if ((playerTurn == PLAYER_1) & (players[0][Y_FIELD_SIZE - 1] != PLAYER_1)) {
+                map[0][Y_FIELD_SIZE - 1] = 1;
+            }
+            if ((playerTurn == PLAYER_2) & (players[X_FIELD_SIZE - 1][0] != PLAYER_2)) {
+                map[X_FIELD_SIZE - 1][0] = 1;
+            }
         }
 
         return map;

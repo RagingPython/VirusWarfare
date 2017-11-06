@@ -22,7 +22,7 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
         View view = inflater.inflate(R.layout.menu_fragment, container, false);
         buttonResume = (Button) view.findViewById(R.id._buttonResume);
         buttonNewGame = (Button) view.findViewById(R.id._buttonNewGame);
-        buttonOptions = (Button) view.findViewById(R.id._buttonOptions);
+        buttonOptions = (Button) view.findViewById(R.id._buttonTutorial);
         buttonExit = (Button) view.findViewById(R.id._buttonExit);
 
         buttonResume.setOnClickListener(this);
@@ -40,9 +40,9 @@ public class MenuFragment extends Fragment implements EventReceiver, View.OnClic
         }else if (view== buttonNewGame) {
             eventManager.broadcastEvent(EventTag.MENU_BUTTON_NEW_GAME,null);
         } else if (view==buttonOptions) {
-            eventManager.broadcastEvent(EventTag.MENU_BUTTON_OPTIONS_CLICK,null);
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_TUTORIAL,null);
         } else if (view==buttonExit) {
-            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT_CLICK,null);
+            eventManager.broadcastEvent(EventTag.MENU_BUTTON_EXIT,null);
         }
     }
 
