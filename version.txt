@@ -19,12 +19,16 @@ v0.4.2
     +bug: crash on swipe-out of field
     +disable landscape
     +add button style
-    -add tutorial
+    +add tutorial
+    +improve color scheme
 
+    -add bot (try to decreas enemy turn posibilitys)
+    -add game mode selection fragment
+    -further gui improvement
+    -add language support
+    -make tutorial more usable
     -improve save/load performance
     -add comments
-    -add bot (try to decreas enemy turn posibilitys)
-    -improve color scheme
     -change EventTag system
     -add memory control
 
